@@ -52,31 +52,98 @@ $(function(){
 })
 
 
-</script>
+$(function() {
+  var tree_shown = $("#non_tree_shown").val();
+  if(tree_shown){
+    $("#side_content").width("0%");
+    $("#main_content").width("100%");
+  }
+  $("#side_content").resizable({
+    alsoResizeReverse: "#main_content"
+  });
+});
 
+
+$.ui.plugin.add("resizable", "alsoResizeReverse", {
+
+    start: function() {
+        var that = $(this).resizable( "instance" ),
+            o = that.options;
+
+        $(o.alsoResizeReverse).each(function() {
+            var el = $(this);
+            el.data("ui-resizable-alsoresizeReverse", {
+                width: parseInt(el.width(), 10), height: parseInt(el.height(), 10),
+                left: parseInt(el.css("left"), 10), top: parseInt(el.css("top"), 10)
+            });
+        });
+    },
+
+    resize: function(event, ui) {
+        var that = $(this).resizable( "instance" ),
+            o = that.options,
+            os = that.originalSize,
+            op = that.originalPosition,
+            delta = {
+                height: (that.size.height - os.height) || 0,
+                width: (that.size.width - os.width) || 0,
+                top: (that.position.top - op.top) || 0,
+                left: (that.position.left - op.left) || 0
+            };
+
+        $(o.alsoResizeReverse).each(function() {
+            var el = $(this), start = $(this).data("ui-resizable-alsoresize-reverse"), style = {},
+                css = el.parents(ui.originalElement[0]).length ?
+                    [ "width", "height" ] :
+                    [ "width", "height", "top", "left" ];
+
+            $.each(css, function(i, prop) {
+                var sum = (start[prop] || 0) - (delta[prop] || 0);
+                if (sum && sum >= 0) {
+                    style[prop] = sum || null;
+                }
+            });
+
+            el.css(style);
+        });
+    },
+
+    stop: function() {
+        $(this).removeData("resizable-alsoresize-reverse");
+    }
+});
+</script>
 <div id="import" data-complete="<%= @warning %>"></div>
 
 <%= render 'shared/td' %>
 <h1>Project <%= session[:project] %></h1>
 <h3>DataSet</h3>
+<div style="display:inline-block;">
 <% if session[:employee] %>
   <%= form_tag(:action => 'bfabric') do %>
     <%= submit_tag 'BFabric', :data=>{:confirm=>"Are you sure you want to register datasets in BFabric?"} %>
     <%= select :parameters, :bfabric_option, ['new', 'update', 'renewal'], :selected => 'new' %>
   <% end %>
 <% end %>
-<%= button_to "Report", "/data_set/report" %>
-
-<% if @project %>
-  <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
-    <ul id="data_set_tree" class="filetree"></ul>
-  <% else %>
-    <%= link_to "Tree view...", "/data_set/index_full" %>
-  <% end %>
+</div>
+<%= button_to "Report", "/data_set/report", form: {style: 'display:inline-block;'} %>
+<% if data_sets = @project.data_sets and data_sets.length != @data_sets.length %>
+  <%= hidden_field :non_tree, :shown, :value => true %>
+  <%= button_to "Tree", "/data_set/index_full", :method=>:get, form: {style: 'display:inline-block;'} %>
 <% end %>
 <% if @project and @data_sets.length > 20 %>
   <div style="height:800px; overflow-y:scroll;">
 <% end %>
+
+<div id="side_content">
+<% if @project %>
+  <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
+    <ul id="data_set_tree" class="filetree"></ul>
+  <% end %>
+<% end %>
+</div>
+
+<div id="main_content">
 <%= form_tag('/data_set/multi_delete', :id=>"multi_delete") do %>
 <table>
   <tr><th>ID</th><th>Name</th><th nowrap><button type="button" id="btn_multi_delete">delete</button> all<%= check_box 'delete_all_flag', 'all', {:id=>'checkall'}, true, false %></th><th>Samples</th><th>ParentID</th><th>Child(ren)IDs</th><th>Who</th><th>Created</th><th>BFabricID</th></tr>
@@ -84,7 +151,7 @@ $(function(){
 <% @data_sets.each do |data_set| %>
   <tr>
     <td><%= data_set.id %></td>
-    <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
+    <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}", :target => "_blank" %></td> 
     <td class='check_box'><%= check_box "delete_flag", "#{data_set.id}", {:class=>'target'}, true, false %></td>
     <td>
       <%= data_set.completed_samples.to_i %> / <%= data_set.samples_length %>
@@ -115,7 +182,7 @@ $(function(){
   <%= link_to "More...", "/data_set/index_full" %>
 <% end %>
 <% end %>
+</div>
 <% if @project and @data_sets.length > 20 %>
   </div/
 <% end %>
-

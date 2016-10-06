@@ -5,7 +5,7 @@
   <% else %>
     <%= form_tag(:controller => 'run_application', :action => 'set_parameters') do %>
       <%= hidden_field :data_set, :id, :value=>@data_set.id %>
-      <table>
+      <table id="sushi_application">
         <th>Category</th><th>Application</th>
       <% @sushi_apps_category.each do |category| %>
         <tr><td><%= category %></td>

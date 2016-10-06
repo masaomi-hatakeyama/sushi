@@ -1,3 +1,6 @@
+html {
+  height: 100%;
+}
 body {
   height: 100%;
   font-family: museo300, Arial, sans-serif;
@@ -7,8 +10,8 @@ body {
 }
 
 div#wrapper {
-  width: 1500px;
-  min-height: 800px;
+  width: 90%;
+  height: 100%;
   margin: 0px auto;
   background-color: transparent;
   background-image: url(/assets/xplosion.png);
@@ -18,11 +21,13 @@ div#wrapper {
 
 div#header {
   height: 90px;
-  padding: 0px;
+  padding:10px;
+  height: 10%;
+  background-color: #ffffff;
 }
 
 div#header h1 {
-  padding: 25px 0 0 0;
+  padding: 0 0 0 0;
   margin: 0px;
   font-size: 4em;
   font-family: italic;
@@ -30,11 +35,11 @@ div#header h1 {
   background-image: url(/assets/sushifabric.png);
   background-repeat: no-repeat;
   background-position: left center;
+  background-color: #ffffff;
 }
 
 div#header nav {
-  float: right;
-  margin-top: 55px;
+  margin: 0px;
   padding: 4px;
   background-color: white;
   border: 1px solid white;
@@ -50,7 +55,7 @@ div#header nav a:hover {
 }
 
 div#header, div#footer {
-  width: 860px;
+  width: 100%;
   color: #666;
   margin: 0px auto;
 }
@@ -58,16 +63,29 @@ div#header, div#footer {
 div#footer {
   text-align: center;
   margin: 5px auto;
+  clear: both;
 }
 
 div#contents {
-  width: 830px;
-  min-height: 360px;
+  width: 100%;
+  min-height: 80%;
   background-color: #fff;
   color: #000;
   margin: 0px auto;
-  padding: 15px;
-  border: solid 1px #ccc;
+  padding: 10px;
+  border: solid 1px #fff;
+}
+
+div#side_content {
+  width: 30%;
+  float: left;
+  background-color: #ffffff;
+}
+
+div#main_content {
+  width: 70%;
+  float: right;
+  background-color: #ffffff;
 }
 
 table {
