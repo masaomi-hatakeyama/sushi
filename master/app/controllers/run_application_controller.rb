@@ -1,4 +1,5 @@
 class RunApplicationController < ApplicationController
+  layout 'data_set_show'
 	def init_factor(factor_key=nil)
 		@factor_colums = {}
     data_set_id = params[:data_set_id]||params[:data_set][:id]
