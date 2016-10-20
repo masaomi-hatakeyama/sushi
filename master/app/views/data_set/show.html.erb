@@ -1,13 +1,4 @@
 <script type="text/javascript">
-$(document).ready(function(){
-  $("#data_set_tree").jstree({
-    'core':{
-      'data':{
-        url: "/data_set/partial_treeviews.<%= params[:id] %>"
-      }
-    }
-  });
-});
 
 $(document).ready(function(){
     var samples_length = $("#data_set_samples_length").val();
