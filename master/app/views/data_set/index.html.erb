@@ -131,7 +131,7 @@ $(function() {
 
    $('table a').click(function (event) {
     event.preventDefault(); // Prevent link from following its href
-    $('#container_main').load("/data_set/p1535/14157");
+    $('#container_main').load($(this).attr("href"));
   });
 
 
@@ -143,13 +143,6 @@ $(function() {
 
 <%= render 'shared/td' %>
 <h1>Project <%= session[:project] %></h1>
-
-<form>
-  <button type="button" id="load_right_content">right_content</button>
-</form>
-
- 
-
 <h3>DataSet</h3>
 <div style="display:inline-block;">
 <% if session[:employee] %>
