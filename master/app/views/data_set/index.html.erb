@@ -112,11 +112,40 @@ $.ui.plugin.add("resizable", "alsoResizeReverse", {
         $(this).removeData("resizable-alsoresize-reverse");
     }
 });
+
+
+
+$(function() {
+   $( "#tabs" ).tabs();
+});
+
+$(function() {
+   $('#load_right_content').click(function(){
+     alert("W");
+     //$.get("/data_set/aaa_hoge");
+     $('#container_main').load('/data_set/p1535/14157');
+     alert("Q");
+   });
+
+
+
+
+
+});
 </script>
 <div id="import" data-complete="<%= @warning %>"></div>
 
 <%= render 'shared/td' %>
 <h1>Project <%= session[:project] %></h1>
+
+<%= render :partial => '/data_set/hoge' %>
+
+<form>
+  <button type="button" id="load_right_content">right_content</button>
+</form>
+
+ 
+
 <h3>DataSet</h3>
 <div style="display:inline-block;">
 <% if session[:employee] %>
@@ -131,19 +160,21 @@ $.ui.plugin.add("resizable", "alsoResizeReverse", {
   <%= hidden_field :non_tree, :shown, :value => true %>
   <%= button_to "Tree", "/data_set/index_full", :method=>:get, form: {style: 'display:inline-block;'} %>
 <% end %>
-<% if @project and @data_sets.length > 20 %>
-  <div style="height:800px; overflow-y:scroll;">
-<% end %>
-
+<hr>
 <div id="side_content">
 <% if @project %>
   <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
-    <ul id="data_set_tree" class="filetree"></ul>
-  <% end %>
-<% end %>
-</div>
 
-<div id="main_content">
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Tree</a></li>
+    <li><a href="#tabs-2">Table</a></li>
+  </ul>
+  <div id="tabs-1">
+    <ul id="data_set_tree" class="filetree"></ul>
+  </div>
+  <div id="tabs-2">
+
 <%= form_tag('/data_set/multi_delete', :id=>"multi_delete") do %>
 <table>
   <tr><th>ID</th><th>Name</th><th nowrap><button type="button" id="btn_multi_delete">delete</button> all<%= check_box 'delete_all_flag', 'all', {:id=>'checkall'}, true, false %></th><th>Samples</th><th>ParentID</th><th>Child(ren)IDs</th><th>Who</th><th>Created</th><th>BFabricID</th></tr>
@@ -182,7 +213,13 @@ $.ui.plugin.add("resizable", "alsoResizeReverse", {
   <%= link_to "More...", "/data_set/index_full" %>
 <% end %>
 <% end %>
+  </div>
 </div>
-<% if @project and @data_sets.length > 20 %>
-  </div/
+ 
+  <% end %>
 <% end %>
+</div>
+
+<div id="main_content">
+<%= render :partial => '/data_set/main' %>
+</div>
