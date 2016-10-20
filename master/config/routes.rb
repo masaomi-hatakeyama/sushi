@@ -24,6 +24,8 @@ SushiFabric::Application.routes.draw do
       post :edit
       post :save_as_tsv
       get :refresh_apps
+      post :confirm_delete_only_data_files
+      post :run_delete_only_data_files
     end
     collection do
       get :whole_treeviews
