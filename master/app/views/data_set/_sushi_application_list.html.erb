@@ -3,7 +3,7 @@
     <font color=red>No Available Application for this DataSet</font><br />
     <%= button_to 'Back', '/run_application', :method=>:get %>
   <% else %>
-    <%= form_tag(:controller => 'run_application', :action => 'set_parameters') do %>
+    <%= form_tag({:controller => 'run_application', :action => 'set_parameters'}, :target=>["_blank"]) do %>
       <%= hidden_field :data_set, :id, :value=>@data_set.id %>
       <table id="sushi_application">
         <th>Category</th><th>Application</th>

@@ -1,3 +1,5 @@
+<h1>Project <%= session[:project] %></h1>
+<hr />
 <h2><%= @sushi_app.class %> <span style="color:gray;font-size:medium">Set Parameters</span></h2>
 <blockquote>
   <%= @sushi_app.description.to_s.html_safe %>
@@ -80,20 +82,9 @@
        $('#parameters_grouping').change(function(){
            var group_name = $("#parameters_grouping").val();
 					 var data_set_id = $("#data_set_id").val();
-					 //alert(group_name);
-					 //alert(data_set_id);
            $.get("/run_application/factor_select?grouping=" + group_name + "&data_set_id=" + data_set_id);
        })
    });
-   //$(function(){
-   //    $('#factor_ref_group').change(function(){
-   //        var group_name = $("#parameters_grouping").val();
-	 //				 var data_set_id = $("#data_set_id").val();
-   //        var ref_sample = $("#parameters_refGroup").val();
-	 //				 alert(ref_sample);
-           //$.get("/run_application/factor_select?grouping=" + group_name + "&data_set_id=" + data_set_id + "&ref_sample=" + ref_sample);
-   //    })
-   //});
 </script>
 
 

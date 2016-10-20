@@ -20,37 +20,10 @@ $(document).ready(function(){
 	}
     });
 
-
-   $('#load_right_content').click(function(){
-     alert("W");
-     $('#container_main').load('/data_set/p1535/14157');
-     alert("Q");
-   });
-
-
-   $('#sushi_application input').click(function (event) {
-    //alert($(this).attr("value"));
-    event.preventDefault(); // Prevent link from following its href
-    // get method
-    //$('#container_main').load("/run_application/set_parameters/TrinityApp/14157");
-    var sushi_app = $(this).attr("value");
-    var id = $("#data_set_id").val();
-    //alert(sushi_app);
-    //alert(id);
-    //$('#container_main').load("/run_application/set_parameters", {app:"TrinityApp", data_set_id:"14157"});
-    $('#container_main').load("/run_application/set_parameters", {app:sushi_app, data_set_id:id});
-  });
-
-
-
 });
 </script>
 <%= render 'shared/td' %>
 <h3>DataSet</h3>
-<form>
-  <button type="button" id="load_right_content">right_content</button>
-</form>
-
 <table>
   <tr><th>ID</th><th>Name</th><th>Samples</th><th>Parent</th><th>Child(ren)IDs</th><th>Created</th><th>BFabricID</th></tr>
   <% if @data_set %>
