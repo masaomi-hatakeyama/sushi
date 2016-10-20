@@ -169,6 +169,8 @@ class DataSetController < ApplicationController
       @sushi_apps = @data_set.runnable_apps
       @sushi_apps_category = @sushi_apps.keys.sort
     end
+
+    render :layout => "data_set_show"
   end
   def refresh_apps
     set_runnable_apps
@@ -189,7 +191,7 @@ class DataSetController < ApplicationController
             "parent" => parent_id,
             "state" => {"opened":true},
             "a_attr" => {"href"=>"/data_set/p#{project_number}/#{data_set_id}", 
-                         "onclick"=>"window.open('/data_set/p#{project_number}/#{data_set_id}')"}
+                         "onclick"=>"$('#container_main').load('/data_set/p#{project_number}/#{data_set_id}');"}
             }
     root << node
     data_set.data_sets.each do |child|
@@ -216,7 +218,7 @@ class DataSetController < ApplicationController
       node = {"id" => data_set.id, 
               "text" => data_set.data_sets.length.to_s+" "+data_set.name+" <small><font color='gray'>"+data_set.comment.to_s+"</font></small>",
               "a_attr" => {"href"=>"/data_set/p#{@project.number}/#{data_set.id}", 
-                           "onclick"=>"$('#container_main').load('/data_set/p1535/14157');"}
+                           "onclick"=>"$('#container_main').load('/data_set/p#{@project.number}/#{data_set.id}');"}
               }
       if parent = data_set.data_set and project_dataset_ids[parent.id]
         node["parent"] = parent.id
