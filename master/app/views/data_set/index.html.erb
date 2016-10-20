@@ -142,6 +142,7 @@ $(function() {
 <div id="import" data-complete="<%= @warning %>"></div>
 
 <%= render 'shared/td' %>
+<div id="side_content">
 <h1>Project <%= session[:project] %></h1>
 <h3>DataSet</h3>
 <div style="display:inline-block;">
@@ -158,7 +159,6 @@ $(function() {
   <%= button_to "Tree", "/data_set/index_full", :method=>:get, form: {style: 'display:inline-block;'} %>
 <% end %>
 <hr>
-<div id="side_content">
 <% if @project %>
   <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
 
