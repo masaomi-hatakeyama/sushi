@@ -44,14 +44,6 @@ $(function(){
   });
 })
 
-$(function(){
-  var msg = $('#import').data('complete');
-  if(msg != ''){
-    alert(msg);
-  }
-})
-
-
 $(function() {
   var tree_shown = $("#non_tree_shown").val();
   if(tree_shown){
@@ -120,11 +112,8 @@ $(function() {
 });
 
 $(function() {
-   $('#load_right_content').click(function(){
-     alert("W");
-     //$.get("/data_set/aaa_hoge");
-     $('#container_main').load('/data_set/p1535/14157');
-     alert("Q");
+   $('#show_table').click(function(){
+     $('#container_main').load('/data_set/table');
    });
 
 
@@ -144,7 +133,6 @@ $(function() {
 <%= render 'shared/td' %>
 <div id="side_content">
 <h1>Project <%= session[:project] %></h1>
-<h3>DataSet</h3>
 <div style="display:inline-block;">
 <% if session[:employee] %>
   <%= form_tag(:action => 'bfabric') do %>
@@ -158,6 +146,10 @@ $(function() {
   <%= hidden_field :non_tree, :shown, :value => true %>
   <%= button_to "Tree", "/data_set/index_full", :method=>:get, form: {style: 'display:inline-block;'} %>
 <% end %>
+
+<form style="display:inline-block;">
+  <button type="button" id="show_table">show table</button>
+</form>
 <hr>
 <% if @project %>
   <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>

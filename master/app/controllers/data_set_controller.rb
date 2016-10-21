@@ -35,6 +35,10 @@ class DataSetController < ApplicationController
     top
     render action: "index"
   end
+  def table
+    top
+    render :layout => "data_set_show"
+  end
 #  caches_action :report
 #  caches_page :report
   def bfabric

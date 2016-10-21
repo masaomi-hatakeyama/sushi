@@ -39,6 +39,7 @@ SushiFabric::Application.routes.draw do
       get :index_full
       post :report
       post :bfabric
+      get :table
     end
   end
   # aliases
