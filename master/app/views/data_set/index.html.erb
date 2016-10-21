@@ -45,11 +45,12 @@ $(function(){
 })
 
 $(function() {
-  var tree_shown = $("#non_tree_shown").val();
-  if(tree_shown){
-    $("#side_content").width("0%");
-    $("#main_content").width("100%");
-  }
+  //var tree_shown = $("#non_tree_shown").val();
+  //alert(tree_shown);
+  //if(tree_shown){
+  //  $("#side_content").width("0%");
+  //  $("#main_content").width("100%");
+  //}
   $("#side_content").resizable({
     alsoResizeReverse: "#main_content"
   });
@@ -143,7 +144,6 @@ $(function() {
 </form>
 <hr>
 <% if @project %>
-  <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
 
 <div id="tabs">
   <ul>
@@ -151,7 +151,9 @@ $(function() {
     <li><a href="#tabs-2">Table</a></li>
   </ul>
   <div id="tabs-1">
-    <ul id="data_set_tree" class="filetree"></ul>
+    <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
+      <ul id="data_set_tree" class="filetree"></ul>
+    <% end %>
   </div>
   <div id="tabs-2">
 
@@ -181,7 +183,6 @@ $(function() {
   </div>
 </div>
  
-  <% end %>
 <% end %>
 </div>
 
