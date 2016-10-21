@@ -51,6 +51,8 @@ $(function() {
   //  $("#side_content").width("0%");
   //  $("#main_content").width("100%");
   //}
+
+  //$('#container_main').load('/data_set/table');
   $("#side_content").resizable({
     alsoResizeReverse: "#main_content"
   });
@@ -116,6 +118,13 @@ $(function() {
    $('#show_table').click(function(){
      $('#container_main').load('/data_set/table');
    });
+
+   $('#check_size').click(function(){
+     var b = $('#side_content');
+     //b.width(800);
+     alert(b.height() + '×' + b.width());
+   });
+
 });
 
 
@@ -141,6 +150,7 @@ $(function() {
 
 <form style="display:inline-block;">
   <button type="button" id="show_table">show table</button>
+  <!--  <button type="button" id="check_size">check size</button> -->
 </form>
 <hr>
 <% if @project %>
