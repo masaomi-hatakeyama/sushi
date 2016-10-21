@@ -34,24 +34,18 @@ $(function(){
   });
 })
 
-$(function(){
-  var msg = $('#import').data('complete');
-  if(msg != ''){
-    alert(msg);
-  }
-})
-
-
-
 $(function() {
+   $('table a.new_tab').click(function (event) {
+    event.preventDefault(); // Prevent link from following its href
+    window.open($(this).attr("href"));
+   });
 
    $('table a').click(function (event) {
     event.preventDefault(); // Prevent link from following its href
     $('#container_main').load($(this).attr("href"));
-  });
-
-
+   });
 });
+
 
 
 </script>
@@ -86,7 +80,7 @@ $(function() {
     <% end %>
     <td><%= data_set.created_at.to_s.gsub(/UTC/,'') %></td>
     <% if data_set.bfabric_id %>
-      <td><%= link_to data_set.bfabric_id, "http://fgcz-bfabric.uzh.ch/bfabric/userlab/show-dataset.html?datasetId=#{data_set.bfabric_id}&tab=details" %></td>
+      <td><%= link_to data_set.bfabric_id, "http://fgcz-bfabric.uzh.ch/bfabric/userlab/show-dataset.html?datasetId=#{data_set.bfabric_id}&tab=details", {:class=>"new_tab"} %></td>
     <% else %>
       <td></td>
     <% end %>
