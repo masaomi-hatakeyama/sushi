@@ -1,25 +1,27 @@
 class DataSetController < ApplicationController
   include SushiFabric
-  def top(n_dataset=1000)
+  def top(n_dataset=1000, sample_search=nil)
     view_context.project_init
     @project = Project.find_by_number(session[:project].to_i)
-
+    
     @data_sets = []
     if @project and  data_sets = @project.data_sets
       @data_sets = data_sets.reverse[0, n_dataset]
-      @data_sets.each do |data_set|
-        unless data_set.completed_samples.to_i == data_set.samples_length.to_i
-          sample_available = 0
-          data_set.samples.each do |sample|
-            if sample_file = sample.to_hash.select{|header, file| header and header.tag?('File')}.first
-              file_path = File.join(SushiFabric::GSTORE_DIR, sample_file.last) 
-              if File.exist?(file_path)
-                sample_available+=1
+      if sample_search
+        @data_sets.each do |data_set|
+          unless data_set.completed_samples.to_i == data_set.samples_length.to_i
+            sample_available = 0
+            data_set.samples.each do |sample|
+              if sample_file = sample.to_hash.select{|header, file| header and header.tag?('File')}.first
+                file_path = File.join(SushiFabric::GSTORE_DIR, sample_file.last) 
+                if File.exist?(file_path)
+                  sample_available+=1
+                end
               end
             end
+            data_set.completed_samples = sample_available
+            data_set.save
           end
-          data_set.completed_samples = sample_available
-          data_set.save
         end
       end
     end
@@ -36,7 +38,7 @@ class DataSetController < ApplicationController
     render action: "index"
   end
   def table
-    top
+    top(1000, true)
     render :layout => "data_set_show"
   end
 #  caches_action :report
@@ -215,23 +217,11 @@ class DataSetController < ApplicationController
   end
   def whole_treeviews
     @project = Project.find_by_number(session[:project].to_i)
-    root = []
-    project_dataset_ids = Hash[*(@project.data_sets.map{|data_set| [data_set.id, true]}.flatten)]
-    @project.data_sets.each do |data_set|
-      node = {"id" => data_set.id, 
-              "text" => data_set.data_sets.length.to_s+" "+data_set.name+" <small><font color='gray'>"+data_set.comment.to_s+"</font></small>",
-              "a_attr" => {"href"=>"/data_set/p#{@project.number}/#{data_set.id}", 
-                           "onclick"=>"$('#container_main').load('/data_set/p#{@project.number}/#{data_set.id}');"}
-              }
-      if parent = data_set.data_set and project_dataset_ids[parent.id]
-        node["parent"] = parent.id
-      else
-        node["parent"] = "#"
-      end
-      root << node
+    if @project.data_set_tree.empty? and @project.data_sets.length > 0
+      @project.construct_data_set_tree
     end
-    
-    render :json => root.reverse
+
+    render :json => @project.data_set_tree.values.reverse
   end
   def import_from_gstore
     params[:project] = session[:project]

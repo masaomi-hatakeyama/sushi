@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805133105) do
+ActiveRecord::Schema.define(version: 20161027084906) do
 
   create_table "data_sets", force: :cascade do |t|
     t.integer  "project_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160805133105) do
     t.integer  "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "data_set_tree"
   end
 
   create_table "samples", force: :cascade do |t|

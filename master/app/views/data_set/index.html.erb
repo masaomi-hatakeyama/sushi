@@ -168,21 +168,15 @@ $(function() {
   <div id="tabs-2">
 
 <table>
-  <tr><th>ID</th><th>Name</th><th>Samples</th><th>Who</th><th>Created</th></tr>
+  <tr><th>ID</th><th>Name</th><th>Samples</th></tr>
 <% if @project %>
 <% @data_sets.each do |data_set| %>
   <tr>
     <td><%= data_set.id %></td>
     <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
-    <td>
-      <%= data_set.completed_samples.to_i %> / <%= data_set.samples_length %>
+    <td align="center">
+      <%= data_set.samples_length %>
     </td>
-    <% if user = data_set.user%>
-      <td><%= user.login %></td>
-    <% else %>
-      <td>sushi_lover</td>
-    <% end %>
-    <td><%= data_set.created_at.to_s.gsub(/UTC/,'') %></td>
   </tr>
 <% end %>
 </table>
