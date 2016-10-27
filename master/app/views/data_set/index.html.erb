@@ -143,10 +143,6 @@ $(function() {
 <% end %>
 </div>
 <%= button_to "Report", "/data_set/report", form: {style: 'display:inline-block;'} %>
-<% if data_sets = @project.data_sets and data_sets.length != @data_sets.length %>
-  <%= hidden_field :non_tree, :shown, :value => true %>
-  <%= button_to "Tree", "/data_set/index_full", :method=>:get, form: {style: 'display:inline-block;'} %>
-<% end %>
 
 <form style="display:inline-block;">
   <button type="button" id="show_table">show table</button>
@@ -161,9 +157,7 @@ $(function() {
     <li><a href="#tabs-2">Table</a></li>
   </ul>
   <div id="tabs-1">
-    <% if data_sets = @project.data_sets and data_sets.length == @data_sets.length %>
-      <ul id="data_set_tree" class="filetree"></ul>
-    <% end %>
+    <ul id="data_set_tree" class="filetree"></ul>
   </div>
   <div id="tabs-2">
 
@@ -174,7 +168,7 @@ $(function() {
   <tr>
     <td><%= data_set.id %></td>
     <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
-    <td align="center">
+    <td>
       <%= data_set.samples_length %>
     </td>
   </tr>

@@ -217,7 +217,7 @@ class DataSetController < ApplicationController
   end
   def whole_treeviews
     @project = Project.find_by_number(session[:project].to_i)
-    if @project.data_set_tree.empty? and @project.data_sets.length > 0
+    if tree = @project.data_set_tree and tree.length != @project.data_sets.length
       @project.construct_data_set_tree
     end
 
@@ -293,6 +293,9 @@ class DataSetController < ApplicationController
 
       if @data_set_id
         set_runnable_apps(false)
+        if data_set = DataSet.find_by_id(@data_set_id) and @project
+          @project.add_tree_node(data_set)
+        end
       end
     end
 
@@ -495,7 +498,9 @@ class DataSetController < ApplicationController
         sample.delete
       end
       @deleted_data_set = @data_set.delete
-
+      project = @data_set.project
+      project.data_set_tree.delete(@data_set.id)
+      project.save
     end
   end
   def multi_destroy
