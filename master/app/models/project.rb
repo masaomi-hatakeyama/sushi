@@ -25,6 +25,7 @@ class Project < ActiveRecord::Base
     end
   end
   def make_tree_node(data_set)
+      project_dataset_ids = Hash[*(self.data_sets.map{|data_set| [data_set.id, true]}.flatten)]
       node = {"id" => data_set.id,
               "text" => data_set.data_sets.length.to_s+" "+data_set.name+" <small><font color='gray'>"+data_set.comment.to_s+"</font></small>",
               "a_attr" => {"href"=>"/data_set/p#{self.number}/#{data_set.id}",
@@ -39,7 +40,6 @@ class Project < ActiveRecord::Base
   end
   def construct_data_set_tree
     tree = {}
-    project_dataset_ids = Hash[*(self.data_sets.map{|data_set| [data_set.id, true]}.flatten)]
     self.data_sets.each do |data_set|
       node = make_tree_node(data_set)
       tree[data_set.id] = node
