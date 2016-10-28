@@ -220,7 +220,7 @@ class DataSetController < ApplicationController
     if tree = @project.data_set_tree and tree.length != @project.data_sets.length
       @project.construct_data_set_tree
     end
-
+    
     render :json => @project.data_set_tree.values.reverse
   end
   def import_from_gstore

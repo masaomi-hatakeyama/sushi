@@ -26,8 +26,15 @@ class Project < ActiveRecord::Base
   end
   def make_tree_node(data_set)
       project_dataset_ids = Hash[*(self.data_sets.map{|data_set| [data_set.id, true]}.flatten)]
+      data_set_name = if data_set.name.length > 20
+                        data_set.name[0,20] + "..."
+                      else
+                        data_set.name
+                      end
+      #"text" => data_set.data_sets.length.to_s+" "+data_set_name+" <small><font color='gray'>"+data_set_comment.to_s+"</font></small>",
+
       node = {"id" => data_set.id,
-              "text" => data_set.data_sets.length.to_s+" "+data_set.name+" <small><font color='gray'>"+data_set.comment.to_s+"</font></small>",
+              "text" => data_set.data_sets.length.to_s+" "+data_set_name,
               "a_attr" => {"href"=>"/data_set/p#{self.number}/#{data_set.id}",
                            "onclick"=>"$('#container_main').load('/data_set/p#{self.number}/#{data_set.id}');"}
               }
