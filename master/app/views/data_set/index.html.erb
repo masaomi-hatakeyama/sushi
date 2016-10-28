@@ -125,6 +125,11 @@ $(function() {
      alert(b.height() + '×' + b.width());
    });
 
+
+  $('table a').click(function (event) {
+    event.preventDefault(); // Prevent link from following its href
+    $('#container_main').load($(this).attr("href"));
+  });
 });
 
 
