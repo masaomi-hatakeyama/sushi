@@ -32,11 +32,12 @@ class Project < ActiveRecord::Base
                         data_set.name
                       end
       #"text" => data_set.data_sets.length.to_s+" "+data_set_name+" <small><font color='gray'>"+data_set_comment.to_s+"</font></small>",
-
+      full_text = data_set.name+" "+data_set.comment
       node = {"id" => data_set.id,
               "text" => data_set.data_sets.length.to_s+" "+data_set_name,
               "a_attr" => {"href"=>"/data_set/p#{self.number}/#{data_set.id}",
-                           "onclick"=>"$('#container_main').load('/data_set/p#{self.number}/#{data_set.id}');"}
+                           "onclick"=>"$('#container_main').load('/data_set/p#{self.number}/#{data_set.id}');",
+                           "class"=>"show_tooltip", "title"=>full_text}
               }
       if parent = data_set.data_set and project_dataset_ids[parent.id]
         node["parent"] = parent.id
