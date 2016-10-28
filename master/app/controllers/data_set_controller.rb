@@ -378,7 +378,10 @@ class DataSetController < ApplicationController
       end
 
       if @data_set_id
-        set_runnable_apps
+        set_runnable_apps(false)
+        if data_set = DataSet.find_by_id(@data_set_id) and @project
+          @project.add_tree_node(data_set)
+        end
       end
     end
   end
