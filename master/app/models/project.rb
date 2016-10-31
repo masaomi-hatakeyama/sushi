@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
                         data_set.name
                       end
       #"text" => data_set.data_sets.length.to_s+" "+data_set_name+" <small><font color='gray'>"+data_set_comment.to_s+"</font></small>",
-      full_text = data_set.name+" "+data_set.comment
+      full_text = data_set.name.to_s+" "+data_set.comment.to_s
       node = {"id" => data_set.id,
               "text" => data_set.data_sets.length.to_s+" "+data_set_name,
               "a_attr" => {"href"=>"/data_set/p#{self.number}/#{data_set.id}",
