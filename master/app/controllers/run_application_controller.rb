@@ -46,7 +46,8 @@ class RunApplicationController < ApplicationController
     require class_name
     @sushi_app = eval(class_name).new
     @sushi_app.workflow_manager = @@workflow_manager
-    data_set_id = params[:data_set][:id]
+    #data_set_id = params[:data_set][:id]
+    data_set_id = params[:data_set_id]
     @data_set = DataSet.find(data_set_id.to_i)
 
     @sushi_app.dataset_sushi_id = data_set_id.to_i

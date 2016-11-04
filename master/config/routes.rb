@@ -40,7 +40,6 @@ SushiFabric::Application.routes.draw do
       post :report
       post :bfabric
       get :table
-      get :set_parameters
     end
   end
   # aliases
@@ -68,7 +67,7 @@ SushiFabric::Application.routes.draw do
   
   resources :run_application, :only => [:index] do
     collection do 
-      post :set_parameters
+      get :set_parameters
       post :confirmation
       post :submit_jobs
 			get  :factor_select

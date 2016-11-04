@@ -581,9 +581,4 @@ class DataSetController < ApplicationController
     @command = @@workflow_manager.delete_command(target)
     @command_log = `#{@command}`
   end
-
-  # this should be deleted later
-  def set_parameters
-    render :layout => "data_set_show"
-  end
 end

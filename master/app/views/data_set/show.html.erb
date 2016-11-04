@@ -45,10 +45,10 @@ $(document).ready(function(){
         dialog.dialog( "close" );
       }
     },
-    close: function() {
-      form[ 0 ].reset();
-      allFields.removeClass( "ui-state-error" );
-    }
+//    close: function() {
+//      form[ 0 ].reset();
+//      allFields.removeClass( "ui-state-error" );
+//    }
   });
 
   form = dialog.find( "form" ).on( "submit", function( event ) {
@@ -57,7 +57,7 @@ $(document).ready(function(){
   });
 
   $( "#sushi_app" ).button().on( "click", function() {
-    $('#container_modal_form').load('/data_set/set_parameters');
+    $('#container_modal_form').load('/run_application/set_parameters?app=FastqcApp&data_set_id=14392');
     dialog.dialog( "open" );
   });
 
