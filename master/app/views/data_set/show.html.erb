@@ -62,7 +62,7 @@ $(document).ready(function(){
   $( ".sushi_app" ).button().on( "click", function() {
     var data_set_id = $("#data_set_id").val();
     var app_name = $(this).text();
-    $('#container_modal_form').load('/run_application/set_parameters?app=' + app_name + '&data_set_id=' + data_set_id);
+    $('#container_modal_form').load('/run_application/set_parameters', {app:app_name,  data_set_id:data_set_id});
     dialog.dialog( "open" );
   });
 
