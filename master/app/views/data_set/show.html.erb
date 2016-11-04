@@ -56,8 +56,10 @@ $(document).ready(function(){
     addUser();
   });
 
-  $( "#sushi_app" ).button().on( "click", function() {
-    $('#container_modal_form').load('/run_application/set_parameters?app=FastqcApp&data_set_id=14392');
+  $( ".sushi_app" ).button().on( "click", function() {
+    var data_set_id = $("#data_set_id").val();
+    var app_name = $(this).text();
+    $('#container_modal_form').load('/run_application/set_parameters?app=' + app_name + '&data_set_id=' + data_set_id);
     dialog.dialog( "open" );
   });
 
@@ -69,7 +71,8 @@ $(document).ready(function(){
   <%= render :partial => '/data_set/modal_form' %>
 </div>
 
-<button id="sushi_app" style="font-size:13px;">FastQCApp</button>
+<button class="sushi_app" style="font-size:13px;">FastqcApp</button>
+<button class="sushi_app" style="font-size:13px;">STARApp</button>
 
 <hr />
 <table>
