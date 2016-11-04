@@ -582,4 +582,8 @@ class DataSetController < ApplicationController
     @command_log = `#{@command}`
   end
 
+  # this should be deleted later
+  def set_parameters
+    render :layout => "data_set_show"
+  end
 end

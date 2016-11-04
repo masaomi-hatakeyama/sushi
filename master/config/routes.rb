@@ -40,6 +40,7 @@ SushiFabric::Application.routes.draw do
       post :report
       post :bfabric
       get :table
+      get :set_parameters
     end
   end
   # aliases
