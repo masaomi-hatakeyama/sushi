@@ -34,6 +34,9 @@ $(document).ready(function(){
     dialog.dialog( "close" );
     return valid;
   }
+  function confirm_parameters() {
+
+  }
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 700,
@@ -70,9 +73,6 @@ $(document).ready(function(){
 <div id="dialog-form" title="Set parameters">
   <%= render :partial => '/data_set/modal_form' %>
 </div>
-
-<button class="sushi_app" style="font-size:13px;">FastqcApp</button>
-<button class="sushi_app" style="font-size:13px;">STARApp</button>
 
 <hr />
 <table>
