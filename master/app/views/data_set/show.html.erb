@@ -29,6 +29,8 @@ $(document).ready(function(){
     allFields = $( [] ).add( name ).add( email ).add( password ),
     tips = $( ".validateTips" );
 
+  var submit_dialog;
+
   function addUser() {
     alert("OK :)");
 
@@ -50,9 +52,28 @@ $(document).ready(function(){
     jQuery.each( formChildren, function( i, ob ) {
       parameters[ob.id] = ob.value;
     });
-    $('#container_modal_form').load('/run_application/confirmation', parameters);
-    dialog.dialog( "open" );
+    $('#container_modal_form2').load('/run_application/confirmation', parameters);
+    submit_dialog.dialog( "open" );
   }
+  function submit_job() {
+    var parameters = {};
+    var next_dataset_name = $("#container_modal_form #next_dataset_name").val();
+    var next_dataset_comment = $("#container_modal_form #next_dataset_comment").val();
+    var sushi_app_class = $("#container_modal_form #sushi_app_class").val();
+    var data_set_id = $("#container_modal_form #data_set_id").val();
+    parameters['sushi_app_class'] = sushi_app_class;
+    parameters['data_set_id'] = data_set_id;
+    parameters['next_dataset_name'] = next_dataset_name;
+    parameters['next_dataset_comment'] = next_dataset_comment;
+    var formChildren = $( "#container_modal_form #sushi_app_params :input" );
+    jQuery.each( formChildren, function( i, ob ) {
+      parameters[ob.id] = ob.value;
+      //alert(ob.id + " " + ob.value);
+    });
+    $('#container_modal_form3').load('/run_application/submit_jobs', parameters);
+    submited_dialog.dialog( "open" );
+  }
+
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 700,
@@ -69,6 +90,31 @@ $(document).ready(function(){
 //      allFields.removeClass( "ui-state-error" );
 //    }
   });
+  submit_dialog = $( "#dialog-form2" ).dialog({
+    autoOpen: false,
+    height: 700,
+    width: 800,
+    modal: true,
+    buttons: {
+      "Submit": submit_job,
+      Cancel: function() {
+        submit_dialog.dialog( "close" );
+      }
+    },
+  });
+  submited_dialog = $( "#dialog-form3" ).dialog({
+    autoOpen: false,
+    height: 700,
+    width: 800,
+    modal: true,
+    buttons: {
+      "Close": function() {
+        submited_dialog.dialog( "close" );
+      }
+    },
+  });
+
+
 
   form = dialog.find( "form" ).on( "submit", function( event ) {
     event.preventDefault();
@@ -90,6 +136,14 @@ $(document).ready(function(){
 <div id="dialog-form" title="Set parameters">
   <%= render :partial => '/data_set/modal_form' %>
 </div>
+<div id="dialog-form2" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form2' %>
+</div>
+<div id="dialog-form3" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form3' %>
+</div>
+
+
 
 <hr />
 <table>

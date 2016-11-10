@@ -1,12 +1,6 @@
-<h1>Project <%= session[:project] %></h1>
-<hr />
 <h2>Confirmation</h2>
-<!--
-<h3> debug print </h3>
-params <%= @params.inspect.to_s %><br /><br />
-sushi_app class <%= @sushi_app.class %><br /><br />
--->
 <%= form_tag(:action => 'submit_jobs') do %>
+  <div id="sushi_app_params">
   <%= hidden_field :sushi_app, :class, :value => @sushi_app.class %>
   <%= hidden_field :data_set, :id, :value => @data_set.id %>
   <%= hidden_field :next_dataset, :name, :value => @sushi_app.next_dataset_name %>
@@ -28,10 +22,8 @@ sushi_app class <%= @sushi_app.class %><br /><br />
         return false;
       });
     <% end %>
-
-  <% else %>
-    <%= submit_tag 'Submit' unless @required %>
   <% end %>
+  </div>
 <% end %>
 
 <h2>Next DataSet</h2>

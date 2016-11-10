@@ -106,7 +106,7 @@ class RunApplicationController < ApplicationController
   end
   def submit_jobs
     @params = params
-    class_name = params[:sushi_app][:class]
+    class_name = params[:sushi_app_class]
     require class_name
     @sushi_app = eval(class_name).new
     @sushi_app.logger = logger
@@ -116,16 +116,15 @@ class RunApplicationController < ApplicationController
                       else
                         'sushi_lover'
                       end
-    data_set_id = params[:data_set][:id]
-    if next_dataset = params[:next_dataset] 
-      if name = next_dataset[:name] and !name.to_s.strip.empty?
-        @sushi_app.next_dataset_name = name.to_s.strip.gsub(/\s/,'_')
-      end
-      if comment = next_dataset[:comment] and !comment.to_s.strip.empty?
-        @sushi_app.next_dataset_comment = comment.to_s.strip
-      end
+    data_set_id = params[:data_set_id]
+    if name = params[:next_dataset_name] and !name.to_s.strip.empty?
+      @sushi_app.next_dataset_name = name.to_s.strip.gsub(/\s/,'_')
     end
-    params[:parameters].each do |key, value|
+    if comment = params[:next_dataset_comment] and !comment.to_s.strip.empty?
+      @sushi_app.next_dataset_comment = comment.to_s.strip
+    end
+    params.select{|k, v| k =~ /parameters/}.each do |key, value|
+      key = key.gsub(/parameters_/, '')
       @sushi_app.params[key] = if @sushi_app.params.data_type(key) == String
                                        value
                                      else
