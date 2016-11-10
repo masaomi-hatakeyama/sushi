@@ -84,6 +84,7 @@ class DataSetController < ApplicationController
     end
     @root = top_nodes.reverse if @root.empty?
     @tree.concat @root
+    render :layout => "data_set_show"
   end
   def script_log
     @data_set = if id = params[:format]

@@ -119,6 +119,10 @@ $(function() {
      $('#container_main').load('/data_set/table');
    });
 
+   $('#full_tree').click(function(){
+     $('#container_main').load('/data_set/report');
+   });
+
    $('#check_size').click(function(){
      var b = $('#side_content');
      //b.width(800);
@@ -148,7 +152,6 @@ $(function() {
   <% end %>
 <% end %>
 </div>
-<%= button_to "Report", "/data_set/report", form: {style: 'display:inline-block;'} %>
 
 <hr>
 <% if @project %>
@@ -159,8 +162,9 @@ $(function() {
     <li><a href="#tabs-2">Table</a></li>
   </ul>
   <div id="tabs-1">
-    <ul id="data_set_tree" class="filetree"></ul>
     <button type="button" id="show_table">Full table</button>
+    <button type="button" id="full_tree">Full tree</button>
+    <ul id="data_set_tree" class="filetree"></ul>
   </div>
   <div id="tabs-2">
 
