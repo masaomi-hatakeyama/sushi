@@ -54,6 +54,7 @@ $(document).ready(function(){
     });
     $('#container_modal_form2').load('/run_application/confirmation', parameters);
     submit_dialog.dialog( "open" );
+    dialog.dialog( "close" );
   }
   function submit_job() {
     var parameters = {};
@@ -72,6 +73,7 @@ $(document).ready(function(){
     });
     $('#container_modal_form3').load('/run_application/submit_jobs', parameters);
     submited_dialog.dialog( "open" );
+    submit_dialog.dialog( "close" );
   }
 
   dialog = $( "#dialog-form" ).dialog({
