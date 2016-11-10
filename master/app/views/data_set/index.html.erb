@@ -150,10 +150,6 @@ $(function() {
 </div>
 <%= button_to "Report", "/data_set/report", form: {style: 'display:inline-block;'} %>
 
-<form style="display:inline-block;">
-  <button type="button" id="show_table">show table</button>
-  <!--  <button type="button" id="check_size">check size</button> -->
-</form>
 <hr>
 <% if @project %>
 
@@ -164,6 +160,7 @@ $(function() {
   </ul>
   <div id="tabs-1">
     <ul id="data_set_tree" class="filetree"></ul>
+    <button type="button" id="show_table">Full table</button>
   </div>
   <div id="tabs-2">
 
