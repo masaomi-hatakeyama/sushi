@@ -33,35 +33,45 @@ $(document).ready(function(){
     alert("OK :)");
 
 
-    var form = $('#test_form');
-    var param = form.serializeArray();
-    //var from = $("#sample1_1").val();
-    alert(param);
-//    var from_child = from.children;
-//    var obj= new Object();
-//    for (var i = 0; i < from_child.length; i++){
-//        if(from_child[i].name === undefined || from_child[i].name == ""){
-//            continue;
-//        }
-//        if(from_child[i].type == 'checkbox' ||from_child[i].type == 'radio'){
-//            if(!from_child[i].checked){
-//                continue;
-//            }
-//        }
-//        obj[from_child[i].name] = from_child[i].value;
-//    }
-// 
-//    var result = "";
-//    for (var key in obj) {
-//        result += key +" = " + obj[key] + "<br />";
-//    }
-//    alert(result);
-
     dialog.dialog( "close" );
     return valid;
   }
   function confirm_parameters() {
+    alert("OK :)");
 
+//    var data_set_id = $("#data_set_id").val();
+//    var app_name = $(this).text();
+//    var parameters = {};
+//    var formChildren = $( "#form_test2 > *" );
+//    jQuery.each( formChildren, function( i, ob ) {
+//      parameters[ob.id] = ob.value;
+//      alert(ob.id + ":" + ob.value);
+//    });
+//
+//    $('#container_modal_form').load('/run_application/set_parameters', parameters);
+//    dialog.dialog( "open" );
+
+    var parameters = {};
+    var next_dataset_name = $("#container_modal_form #next_dataset_name").val();
+    var next_dataset_comment = $("#container_modal_form #next_dataset_comment").val();
+    var sushi_app_class = $("#container_modal_form #sushi_app_class").val();
+    var data_set_id = $("#container_modal_form #data_set_id").val();
+    parameters['sushi_app_class'] = sushi_app_class;
+    parameters['data_set_id'] = data_set_id;
+    parameters['next_dataset_name'] = next_dataset_name;
+    parameters['next_dataset_comment'] = next_dataset_comment;
+//    alert(parameters['sushi_app_class']);
+//    alert(parameters['data_set_id']);
+//    alert(parameters['next_dataset_name']);
+//    alert(parameters['next_dataset_comment']);
+    var formChildren = $( "#container_modal_form #sushi_app_params :input" );
+    alert(formChildren.length);
+    jQuery.each( formChildren, function( i, ob ) {
+      parameters[ob.id] = ob.value;
+      alert(ob.id + ":" + ob.value);
+    });
+    $('#container_modal_form').load('/run_application/confirmation', parameters);
+    dialog.dialog( "open" );
   }
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
@@ -69,7 +79,8 @@ $(document).ready(function(){
     width: 800,
     modal: true,
     buttons: {
-      "Next": addUser,
+      //"Next": addUser,
+      "Next": confirm_parameters,
       Cancel: function() {
         dialog.dialog( "close" );
       }
@@ -110,6 +121,11 @@ $(document).ready(function(){
   <%= hidden_field :data_set, :id, :value => @data_set.id %>
   <button class="sushi_app" style="font-size:13px;" id="app" value="FastqcApp">FastqcApp</button>
 </form>
+<form id="form_test2">
+  <%= hidden_field :data_set, :id, :value => @data_set.id %>
+  <button class="sushi_app" style="font-size:13px;" id="app" value="STARApp">STARApp</button>
+</form>
+
 
 <div id="dialog-form" title="Set parameters">
   <%= render :partial => '/data_set/modal_form' %>
