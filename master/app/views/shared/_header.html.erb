@@ -2,7 +2,6 @@
   <nav id="login">
   <% if user_signed_in? %>
     <% project_init %>
-    <%= form_tag(:action => "index", :controller => "home") do %>
     <%= link_to "Today's Menu", "/" %>
 		-
     <%= link_to 'DataSet', "/data_set", :method => :get %>
@@ -18,11 +17,23 @@
     <%= link_to "Help", "/sushi_doc_md.html" %>
     -
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-    - Project 
-      <%= text_field :project, :number, :value=>"#{session[:project]}", :size=>10 %>
-      <%= select :select_project, :number, session[:projects], :prompt=>'project list' %>
-      <%= submit_tag "Go" %>
+    <div style="display:inline-block;">
+    <% if session[:employee] %>
+      <%= form_tag({:controller => 'data_set',:action => 'bfabric'}) do %>
+        -
+        <%= submit_tag 'BFabric', :data=>{:confirm=>"Are you sure you want to register datasets in BFabric?"} %>
+        <%= select :parameters, :bfabric_option, ['new', 'update', 'renewal'], :selected => 'new' %>
+      <% end %>
     <% end %>
+    </div>
+    <div style="display:inline-block;">
+      <%= form_tag(:action => "index", :controller => "home") do %>
+        - Project 
+        <%= text_field :project, :number, :value=>"#{session[:project]}", :size=>10 %>
+        <%= select :select_project, :number, session[:projects], :prompt=>'project list' %>
+        <%= submit_tag "Go" %>
+      <% end %>
+    </div>
   <% elsif !SushiFabric::Application.config.fgcz? %>
     <%= link_to "Today's Menu", "/" %>
 		-
