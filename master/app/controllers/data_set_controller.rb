@@ -511,6 +511,7 @@ class DataSetController < ApplicationController
       project = @data_set.project
       project.data_set_tree.delete(@data_set.id)
       project.save
+      @data_set
     end
   end
   def multi_destroy
