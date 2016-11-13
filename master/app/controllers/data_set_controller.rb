@@ -178,6 +178,10 @@ class DataSetController < ApplicationController
       @sushi_apps = @data_set.runnable_apps
       @sushi_apps_category = @sushi_apps.keys.sort
     end
+
+    # keep data_set.id
+    session[:latest_data_set_id] = @data_set.id
+
     render :layout => "data_set_show"
   end
   def refresh_apps

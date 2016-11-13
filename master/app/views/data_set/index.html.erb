@@ -136,6 +136,7 @@ $(function() {
   });
 
   $(".show_tooltip").tooltip();
+
 });
 
 
@@ -145,6 +146,7 @@ $(function() {
 <%= render 'shared/td' %>
 <div id="side_content">
 
+<%= hidden_field :latest_data_set, :id, :value => session[:latest_data_set_id] %>
 <hr>
 <% if @project %>
 
@@ -186,3 +188,14 @@ $(function() {
 <div id="main_content">
 <%= render :partial => '/data_set/main' %>
 </div>
+
+
+<script type="text/javascript">
+$(function() {
+  var latest_data_set_id = $("#latest_data_set_id").val();
+  if(latest_data_set_id){
+    // load latest data_set in container main pane
+    $('#container_main').load('/data_set/show/' + latest_data_set_id );
+  }
+});
+</script>
