@@ -117,6 +117,7 @@ class DataSetController < ApplicationController
       data_set.comment = comment
       data_set.project.add_tree_node(data_set)
       data_set.save
+      redirect_to(:action => "index") and return
     end 
     # new data_set name
     if new_data_set = params[:data_set] and name = new_data_set[:name] and id = new_data_set[:id]
@@ -124,6 +125,7 @@ class DataSetController < ApplicationController
       data_set.name = name
       data_set.project.add_tree_node(data_set)
       data_set.save
+      redirect_to(:action => "index") and return
     end
 
     @data_set = DataSet.find_by_id(params[:id])
