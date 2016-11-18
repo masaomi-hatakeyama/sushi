@@ -144,8 +144,18 @@ $(document).ready(function(){
   <%= render :partial => '/data_set/modal_form3' %>
 </div>
 
-
-
+<%= form_tag({:controller => 'data_set',:action => 'edit'}, {:class => "button_to"}) do %>
+  <%= submit_tag 'add comment', :name=>'edit_option' %>
+  <%= hidden_field :data_set, :id, :value=>@data_set.id %>
+  <%= submit_tag 'edit name', :name=>'edit_option' %>
+<% end %>
+<%= button_to "download as tsv", {:action=>"save_as_tsv", :id=>@data_set.id} %>
+<% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
+  <%= button_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id} %>
+<% end %>
+<%= button_to 'edit sample', "/sample/#{@data_set.id}" %>
+<%= button_to 'Go Job Script&Log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
+<%= button_to 'Show Job Parameter', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
 <hr />
 <h3>DataSet</h3>
 <table>
@@ -174,22 +184,9 @@ $(document).ready(function(){
   <% end %>
 </table>
 <ul id="data_set_tree" class="filetree"></ul>
-<%= form_tag({:controller => 'data_set',:action => 'edit'}, {:class => "button_to"}) do %>
-  <% if @data_set.comment %>
-    <%= @data_set.comment %><br />
-    <%= submit_tag 'edit comment', :name=>'edit_option' %>
-  <% else %>
-    <%= submit_tag 'add comment', :name=>'edit_option' %>
-  <% end %>
-
-  <%= hidden_field :data_set, :id, :value=>@data_set.id %>
-  <%= submit_tag 'edit name', :name=>'edit_option' %>
+<% if @data_set.comment %>
+  <%= @data_set.comment %><br />
 <% end %>
-<%= button_to "download as tsv", {:action=>"save_as_tsv", :id=>@data_set.id} %>
-<% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
-  <%= button_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id} %>
-<% end %>
-
 <hr />
 <h3>Samples <button id="hide">Hide</button></h3>
 
@@ -239,7 +236,6 @@ $(document).ready(function(){
     </div>
   <% end %>
     </div>
-<%= button_to 'edit sample', "/sample/#{@data_set.id}" %>
 <% end %>
 </div>
 <hr />
@@ -272,5 +268,3 @@ $(document).ready(function(){
   <% end %>
 
 <hr />
-<%= button_to 'Go Job Script&Log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
-<%= button_to 'Show Job Parameter', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
