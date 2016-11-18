@@ -260,14 +260,14 @@ $(document).ready(function(){
   <% end %>
 
     <hr />
-    <h3>Applications</h3>
   <% if !@sample_invalid_name.keys.empty? %>
+    <h3>Applications</h3>
     <ul>
       <li><font color=red>Invalid character is used in sample name. Please correct it.</font></li>
       <li>Invalid characters: !@#$%^&*()<>{}[]/:;"='+| and SPACE</li>
     </ul>
   <% elsif @sushi_apps %>
-    <form> <button type="button" id="refresh_sushi_list">refresh</button> </form>
+    <h3>Applications <form style="display:inline-block;"> <button type="button" id="refresh_sushi_list">refresh</button> </form></h3> 
     <%= render :partial => '/data_set/sushi_application_list' %>
   <% end %>
 
