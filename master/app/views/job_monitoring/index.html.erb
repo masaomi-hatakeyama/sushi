@@ -34,7 +34,7 @@
         <% if @all_job_list %>
           <%= link_to td(submit_job.data_set.name+" (p#{job[5]})"), :controller=>:data_set, :action=>:show, :id=>submit_job.next_dataset_id, :project=>job[5] %>
         <% else %>
-          <%= link_to td(submit_job.data_set.name), "/data_set/#{submit_job.next_dataset_id}" %>
+          <%= link_to td(submit_job.data_set.name), "/data_set.#{submit_job.next_dataset_id}" %>
         <% end %>
       <% end %>
     </td>

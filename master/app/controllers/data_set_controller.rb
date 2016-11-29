@@ -31,6 +31,14 @@ class DataSetController < ApplicationController
       @warning = warning
       session['import_fail'] = nil
     end
+    if data_set_id = params[:format] and
+      session[:latest_data_set_id] = data_set_id
+    end
+    unless latest_data_set_id = session[:latest_data_set_id] and
+       data_set = DataSet.find_by_id(latest_data_set_id.to_i) and
+       data_set.project.number == session[:project]
+      session[:latest_data_set_id] = nil
+    end
     top(10)
   end
   def index_full
