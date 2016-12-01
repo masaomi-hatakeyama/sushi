@@ -1,5 +1,4 @@
 <script type="text/javascript">
-
 $(document).ready(function(){
     var samples_length = $("#data_set_samples_length").val();
     if(parseInt(samples_length) > 5){
@@ -21,23 +20,8 @@ $(document).ready(function(){
     });
 
   // modal form
+  var parameter_dialog, submit_dialog, submited_dialog;
 
-  var dialog, form,
-    name = $( "#name" ),
-    email = $( "#email" ),
-    password = $( "#password" ),
-    allFields = $( [] ).add( name ).add( email ).add( password ),
-    tips = $( ".validateTips" );
-
-  var submit_dialog;
-
-  function addUser() {
-    alert("OK :)");
-
-
-    dialog.dialog( "close" );
-    return valid;
-  }
   function confirm_parameters() {
     var parameters = {};
     var next_dataset_name = $("#container_modal_form #next_dataset_name").val();
@@ -54,7 +38,7 @@ $(document).ready(function(){
     });
     $('#container_modal_form2').load('/run_application/confirmation', parameters);
     submit_dialog.dialog( "open" );
-    dialog.dialog( "close" );
+    parameter_dialog.dialog( "close" );
   }
   function submit_job() {
     var parameters = {};
@@ -75,8 +59,7 @@ $(document).ready(function(){
     submited_dialog.dialog( "open" );
     submit_dialog.dialog( "close" );
   }
-
-  dialog = $( "#dialog-form" ).dialog({
+  parameter_dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 700,
     width: 800,
@@ -84,13 +67,9 @@ $(document).ready(function(){
     buttons: {
       "Next": confirm_parameters,
       Cancel: function() {
-        dialog.dialog( "close" );
+        parameter_dialog.dialog( "close" );
       }
     },
-//    close: function() {
-//      form[ 0 ].reset();
-//      allFields.removeClass( "ui-state-error" );
-//    }
   });
   submit_dialog = $( "#dialog-form2" ).dialog({
     autoOpen: false,
@@ -116,20 +95,12 @@ $(document).ready(function(){
     },
   });
 
-
-
-  form = dialog.find( "form" ).on( "submit", function( event ) {
-    event.preventDefault();
-    addUser();
-  });
-
   $( ".sushi_app" ).button().on( "click", function() {
     var data_set_id = $("#data_set_id").val();
     var app_name = $(this).text();
     $('#container_modal_form').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
-    dialog.dialog( "open" );
+    parameter_dialog.dialog( "open" );
   });
-
 });
 </script>
 <%= render 'shared/td' %>
