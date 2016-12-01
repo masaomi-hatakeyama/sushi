@@ -31,7 +31,7 @@ class DataSetController < ApplicationController
       @warning = warning
       session['import_fail'] = nil
     end
-    if data_set_id = params[:format]
+    if data_set_id = params[:format] and DataSet.find_by_id(data_set_id.to_i)
       session[:latest_data_set_id] = data_set_id
     end
     unless latest_data_set_id = session[:latest_data_set_id] and
