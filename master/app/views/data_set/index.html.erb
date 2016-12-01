@@ -7,139 +7,129 @@ $(document).ready(function(){
       }
     }
   });
-});
 
-$(document).ready(function() {
-      $('#checkall').click(function(e) {
-        if($(this).prop("checked")){
-            $('.target').each(function() {
-                    $(this).prop("checked", true);
-            });
-          }else{
-            $('.target').each(function() {
-                    $(this).prop("checked", false);
-            });
-          }
+  $('#checkall').click(function(e) {
+    if($(this).prop("checked")){
+      $('.target').each(function() {
+        $(this).prop("checked", true);
       });
-
-  });
-
-
-$(function(){
-  $('#btn_multi_delete').click(function(){
-    var flag=false;
-    $('.target').each(function() {
-       if($(this).prop("checked")){
-         flag=true;
-         return false;
-       }
-    });
-    if(flag==true){
-      // selected at least one
-      $('#multi_delete').submit();
     }else{
-      // no selected
-      alert('Please select at least one DataSet.');
+      $('.target').each(function() {
+        $(this).prop("checked", false);
+      });
     }
   });
-})
 
-$(function() {
-  //var tree_shown = $("#non_tree_shown").val();
-  //alert(tree_shown);
-  //if(tree_shown){
-  //  $("#side_content").width("0%");
-  //  $("#main_content").width("100%");
-  //}
+  $(function(){
+    $('#btn_multi_delete').click(function(){
+      var flag=false;
+      $('.target').each(function() {
+         if($(this).prop("checked")){
+           flag=true;
+           return false;
+         }
+      });
+      if(flag==true){
+        // selected at least one
+        $('#multi_delete').submit();
+      }else{
+        // no selected
+        alert('Please select at least one DataSet.');
+      }
+    });
+  })
 
-  //$('#container_main').load('/data_set/table');
-  $("#side_content").resizable({
-    alsoResizeReverse: "#main_content"
+  $(function() {
+    //var tree_shown = $("#non_tree_shown").val();
+    //alert(tree_shown);
+    //if(tree_shown){
+    //  $("#side_content").width("0%");
+    //  $("#main_content").width("100%");
+    //}
+
+    //$('#container_main').load('/data_set/table');
+    $("#side_content").resizable({
+      alsoResizeReverse: "#main_content"
+    });
   });
-});
 
+  $.ui.plugin.add("resizable", "alsoResizeReverse", {
+      start: function() {
+          var that = $(this).resizable( "instance" ),
+              o = that.options;
+          $(o.alsoResizeReverse).each(function() {
+              var el = $(this);
+              el.data("ui-resizable-alsoresizeReverse", {
+                  width: parseInt(el.width(), 10), height: parseInt(el.height(), 10),
+                  left: parseInt(el.css("left"), 10), top: parseInt(el.css("top"), 10)
+              });
+          });
+      },
+      resize: function(event, ui) {
+          var that = $(this).resizable( "instance" ),
+              o = that.options,
+              os = that.originalSize,
+              op = that.originalPosition,
+              delta = {
+                  height: (that.size.height - os.height) || 0,
+                  width: (that.size.width - os.width) || 0,
+                  top: (that.position.top - op.top) || 0,
+                  left: (that.position.left - op.left) || 0
+              };
+          $(o.alsoResizeReverse).each(function() {
+              var el = $(this), start = $(this).data("ui-resizable-alsoresize-reverse"), style = {},
+                  css = el.parents(ui.originalElement[0]).length ?
+                      [ "width", "height" ] :
+                      [ "width", "height", "top", "left" ];
+              $.each(css, function(i, prop) {
+                  var sum = (start[prop] || 0) - (delta[prop] || 0);
+                  if (sum && sum >= 0) {
+                      style[prop] = sum || null;
+                  }
+              });
 
-$.ui.plugin.add("resizable", "alsoResizeReverse", {
+              el.css(style);
+          });
+      },
+      stop: function() {
+          $(this).removeData("resizable-alsoresize-reverse");
+      }
+  });
 
-    start: function() {
-        var that = $(this).resizable( "instance" ),
-            o = that.options;
+  $(function() {
+     $( "#tabs" ).tabs();
+  });
 
-        $(o.alsoResizeReverse).each(function() {
-            var el = $(this);
-            el.data("ui-resizable-alsoresizeReverse", {
-                width: parseInt(el.width(), 10), height: parseInt(el.height(), 10),
-                left: parseInt(el.css("left"), 10), top: parseInt(el.css("top"), 10)
-            });
-        });
-    },
+  $(function() {
+     $('#show_table').click(function(){
+       $('#container_main').load('/data_set/table');
+     });
 
-    resize: function(event, ui) {
-        var that = $(this).resizable( "instance" ),
-            o = that.options,
-            os = that.originalSize,
-            op = that.originalPosition,
-            delta = {
-                height: (that.size.height - os.height) || 0,
-                width: (that.size.width - os.width) || 0,
-                top: (that.position.top - op.top) || 0,
-                left: (that.position.left - op.left) || 0
-            };
+     $('#full_tree').click(function(){
+       $('#container_main').load('/data_set/report');
+     });
 
-        $(o.alsoResizeReverse).each(function() {
-            var el = $(this), start = $(this).data("ui-resizable-alsoresize-reverse"), style = {},
-                css = el.parents(ui.originalElement[0]).length ?
-                    [ "width", "height" ] :
-                    [ "width", "height", "top", "left" ];
+     $('#check_size').click(function(){
+       var b = $('#side_content');
+       //b.width(800);
+       alert(b.height() + '×' + b.width());
+     });
 
-            $.each(css, function(i, prop) {
-                var sum = (start[prop] || 0) - (delta[prop] || 0);
-                if (sum && sum >= 0) {
-                    style[prop] = sum || null;
-                }
-            });
+    $('table a').click(function (event) {
+      event.preventDefault(); // Prevent link from following its href
+      $('#container_main').load($(this).attr("href"));
+    });
+    $(".show_tooltip").tooltip();
+  });
 
-            el.css(style);
-        });
-    },
-
-    stop: function() {
-        $(this).removeData("resizable-alsoresize-reverse");
+  $(function() {
+    var latest_data_set_id = $("#latest_data_set_id").val();
+    if(latest_data_set_id){
+      // load latest data_set in container main pane
+      $('#container_main').load('/data_set/show/' + latest_data_set_id );
     }
-});
-
-
-
-$(function() {
-   $( "#tabs" ).tabs();
-});
-
-$(function() {
-   $('#show_table').click(function(){
-     $('#container_main').load('/data_set/table');
-   });
-
-   $('#full_tree').click(function(){
-     $('#container_main').load('/data_set/report');
-   });
-
-   $('#check_size').click(function(){
-     var b = $('#side_content');
-     //b.width(800);
-     alert(b.height() + '×' + b.width());
-   });
-
-
-  $('table a').click(function (event) {
-    event.preventDefault(); // Prevent link from following its href
-    $('#container_main').load($(this).attr("href"));
   });
-
-  $(".show_tooltip").tooltip();
-
 });
-
-
 </script>
 <div id="import" data-complete="<%= @warning %>"></div>
 
@@ -161,41 +151,30 @@ $(function() {
     <ul id="data_set_tree" class="filetree"></ul>
   </div>
   <div id="tabs-2">
-
-<table>
-  <tr><th>ID</th><th>Name</th><th>Samples</th></tr>
-<% if @project %>
-<% @data_sets.each do |data_set| %>
-  <tr>
-    <td><%= data_set.id %></td>
-    <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
-    <td>
-      <%= data_set.samples_length %>
-    </td>
-  </tr>
-<% end %>
-</table>
-<% if @project and data_sets = @project.data_sets and data_sets.length > @data_sets.length %>
-  <%= link_to "More...", "/data_set/index_full" %>
-<% end %>
-<% end %>
-  </div>
-</div>
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Samples</th></tr>
+    <% if @project %>
+    <% @data_sets.each do |data_set| %>
+      <tr>
+        <td><%= data_set.id %></td>
+        <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
+        <td>
+          <%= data_set.samples_length %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+    <% if @project and data_sets = @project.data_sets and data_sets.length > @data_sets.length %>
+      <%= link_to "More...", "/data_set/index_full" %>
+    <% end %>
+    <% end %>
+  </div> <!-- div id="tabs-2" -->
+</div> <!-- div id="tabs"9 -->
  
 <% end %>
-</div>
+</div> <!-- div id="side_content" -->
 
 <div id="main_content">
-<%= render :partial => '/data_set/main' %>
+  <%= render :partial => '/data_set/main' %>
 </div>
 
-
-<script type="text/javascript">
-$(function() {
-  var latest_data_set_id = $("#latest_data_set_id").val();
-  if(latest_data_set_id){
-    // load latest data_set in container main pane
-    $('#container_main').load('/data_set/show/' + latest_data_set_id );
-  }
-});
-</script>
