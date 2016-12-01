@@ -136,7 +136,7 @@ $(document).ready(function(){
 </div>
 
 <button id="add_comment">add comment</button>
-<button id="edit_name">edit name new</button>
+<button id="edit_name">edit name</button>
 <%= hidden_field :data_set, :name, :value=>@data_set.name %>
 <%= hidden_field :data_set, :id, :value=>@data_set.id %>
 <%= button_to "download as tsv", {:action=>"save_as_tsv", :id=>@data_set.id} %>
