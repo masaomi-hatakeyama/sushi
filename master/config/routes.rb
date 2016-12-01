@@ -41,6 +41,7 @@ SushiFabric::Application.routes.draw do
       post :bfabric
       get :table
       post :add_comment
+      post :edit_name
     end
   end
   # aliases

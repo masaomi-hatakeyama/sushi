@@ -118,8 +118,18 @@ class DataSetController < ApplicationController
       data_set.comment = comment
       data_set.project.add_tree_node(data_set)
       data_set.save
+      session[:latest_data_set_id] = data_set.id
     end 
-    session[:latest_data_set_id] = data_set.id
+    redirect_to(:action => "index") and return
+  end
+  def edit_name
+    if id = params[:data_set_id] and name = params[:data_set_name]
+      data_set = DataSet.find_by_id(id)
+      data_set.name = name
+      data_set.project.add_tree_node(data_set)
+      data_set.save
+      session[:latest_data_set_id] = data_set.id
+    end
     redirect_to(:action => "index") and return
   end
   def show
@@ -128,14 +138,6 @@ class DataSetController < ApplicationController
     # switch project (from job_monitoring)
     if project = params[:project]
       session[:project] = project.to_i
-    end
-    # new data_set name
-    if new_data_set = params[:data_set] and name = new_data_set[:name] and id = new_data_set[:id]
-      data_set = DataSet.find_by_id(id)
-      data_set.name = name
-      data_set.project.add_tree_node(data_set)
-      data_set.save
-      redirect_to(:action => "index") and return
     end
 
     @data_set = DataSet.find_by_id(params[:id])
