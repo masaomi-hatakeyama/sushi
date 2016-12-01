@@ -101,6 +101,16 @@ $(document).ready(function(){
     $('#container_modal_form').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
     parameter_dialog.dialog( "open" );
   });
+
+  $("#add_comment").click(function(){
+    var data_set_id = $("#data_set_id").val();
+    var old_comment = $("#data_set_comment").val();
+    var new_comment = prompt("add comment", old_comment);
+
+    if (data_set_id != null && new_comment != null) {
+      $('#container_main').load('/data_set/add_comment', {'data_set_id':data_set_id, 'data_set_comment':new_comment});
+    }
+  });
 });
 </script>
 <%= render 'shared/td' %>
@@ -115,8 +125,8 @@ $(document).ready(function(){
   <%= render :partial => '/data_set/modal_form3' %>
 </div>
 
+<button id="add_comment">add comment</button>
 <%= form_tag({:controller => 'data_set',:action => 'edit'}, {:class => "button_to"}) do %>
-  <%= submit_tag 'add comment', :name=>'edit_option' %>
   <%= hidden_field :data_set, :id, :value=>@data_set.id %>
   <%= submit_tag 'edit name', :name=>'edit_option' %>
 <% end %>
@@ -156,6 +166,7 @@ $(document).ready(function(){
 </table>
 <ul id="data_set_tree" class="filetree"></ul>
 <% if @data_set.comment %>
+  <%= hidden_field :data_set, :comment, :value=>@data_set.comment %>
   <%= @data_set.comment %><br />
 <% end %>
 <hr />

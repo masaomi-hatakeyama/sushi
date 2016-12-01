@@ -40,6 +40,7 @@ SushiFabric::Application.routes.draw do
       get :report
       post :bfabric
       get :table
+      post :set_comment
     end
   end
   # aliases

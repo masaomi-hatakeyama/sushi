@@ -112,6 +112,16 @@ class DataSetController < ApplicationController
       @data_set.save
     end
   end
+  def add_comment
+    if id = params[:data_set_id] and comment = params[:data_set_comment]
+      data_set = DataSet.find_by_id(id)
+      data_set.comment = comment
+      data_set.project.add_tree_node(data_set)
+      data_set.save
+    end 
+    session[:latest_data_set_id] = data_set.id
+    redirect_to(:action => "index") and return
+  end
   def show
     view_context.project_init
     @fgcz = SushiFabric::Application.config.fgcz?
@@ -119,14 +129,6 @@ class DataSetController < ApplicationController
     if project = params[:project]
       session[:project] = project.to_i
     end
-    # data_set comment
-    if data_set = params[:data_set] and comment = data_set[:comment] and id = data_set[:id]
-      data_set = DataSet.find_by_id(id)
-      data_set.comment = comment
-      data_set.project.add_tree_node(data_set)
-      data_set.save
-      redirect_to(:action => "index") and return
-    end 
     # new data_set name
     if new_data_set = params[:data_set] and name = new_data_set[:name] and id = new_data_set[:id]
       data_set = DataSet.find_by_id(id)
