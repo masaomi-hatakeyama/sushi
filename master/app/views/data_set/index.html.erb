@@ -41,14 +41,6 @@ $(document).ready(function(){
   })
 
   $(function() {
-    //var tree_shown = $("#non_tree_shown").val();
-    //alert(tree_shown);
-    //if(tree_shown){
-    //  $("#side_content").width("0%");
-    //  $("#main_content").width("100%");
-    //}
-
-    //$('#container_main').load('/data_set/table');
     $("#side_content").resizable({
       alsoResizeReverse: "#main_content"
     });
@@ -103,11 +95,11 @@ $(document).ready(function(){
 
   $(function() {
      $('#show_table').click(function(){
-       $('#container_main').load('/data_set/table');
+       $('#main_content').load('/data_set/table');
      });
 
      $('#full_tree').click(function(){
-       $('#container_main').load('/data_set/report');
+       $('#main_content').load('/data_set/report');
      });
 
      $('#check_size').click(function(){
@@ -118,7 +110,7 @@ $(document).ready(function(){
 
     $('table a').click(function (event) {
       event.preventDefault(); // Prevent link from following its href
-      $('#container_main').load($(this).attr("href"));
+      $('#main_content').load($(this).attr("href"));
     });
     $(".show_tooltip").tooltip();
   });
@@ -127,7 +119,7 @@ $(document).ready(function(){
     var latest_data_set_id = $("#latest_data_set_id").val();
     if(latest_data_set_id){
       // load latest data_set in container main pane
-      $('#container_main').load('/data_set/show/' + latest_data_set_id );
+      $('#main_content').load('/data_set/show/' + latest_data_set_id );
     }
   });
 });
@@ -175,7 +167,4 @@ $(document).ready(function(){
 <% end %>
 </div> <!-- div id="side_content" -->
 
-<div id="main_content">
-  <%= render :partial => '/data_set/main' %>
-</div>
-
+<div id="main_content"></div>

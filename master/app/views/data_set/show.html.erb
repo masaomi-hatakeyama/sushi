@@ -108,7 +108,7 @@ $(document).ready(function(){
     var new_comment = prompt("add comment", old_comment);
 
     if (data_set_id != null && new_comment != null) {
-      $('#container_main').load('/data_set/add_comment', {'data_set_id':data_set_id, 'data_set_comment':new_comment});
+      $('#main_content').load('/data_set/add_comment', {'data_set_id':data_set_id, 'data_set_comment':new_comment});
     }
   });
   $("#edit_name").click(function(){
@@ -117,7 +117,7 @@ $(document).ready(function(){
     var new_name = prompt("edit name", old_name);
 
     if (data_set_id != null && new_name != null) {
-      $('#container_main').load('/data_set/edit_name', {'data_set_id':data_set_id, 'data_set_name':new_name});
+      $('#main_content').load('/data_set/edit_name', {'data_set_id':data_set_id, 'data_set_name':new_name});
     }
   });
 

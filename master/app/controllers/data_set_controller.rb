@@ -217,7 +217,7 @@ class DataSetController < ApplicationController
             "parent" => parent_id,
             "state" => {"opened":true},
             "a_attr" => {"href"=>"/data_set/p#{project_number}/#{data_set_id}", 
-                         "onclick"=>"$('#container_main').load('/data_set/p#{project_number}/#{data_set_id}');"}
+                         "onclick"=>"$('#main_content').load('/data_set/p#{project_number}/#{data_set_id}');"}
             }
     root << node
     data_set.data_sets.each do |child|
