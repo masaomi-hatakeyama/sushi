@@ -21,29 +21,21 @@ $(document).ready(function(){
     }
   });
 
-  $(function(){
-    $('#btn_multi_delete').click(function(){
-      var flag=false;
-      $('.target').each(function() {
-         if($(this).prop("checked")){
-           flag=true;
-           return false;
-         }
-      });
-      if(flag==true){
-        // selected at least one
-        $('#multi_delete').submit();
-      }else{
-        // no selected
-        alert('Please select at least one DataSet.');
-      }
+  $('#btn_multi_delete').click(function(){
+    var flag=false;
+    $('.target').each(function() {
+       if($(this).prop("checked")){
+         flag=true;
+         return false;
+       }
     });
-  })
-
-  $(function() {
-    $("#side_content").resizable({
-      alsoResizeReverse: "#main_content"
-    });
+    if(flag==true){
+      // selected at least one
+      $('#multi_delete').submit();
+    }else{
+      // no selected
+      alert('Please select at least one DataSet.');
+    }
   });
 
   $.ui.plugin.add("resizable", "alsoResizeReverse", {
@@ -89,39 +81,37 @@ $(document).ready(function(){
       }
   });
 
-  $(function() {
-     $( "#tabs" ).tabs();
+  $("#side_content").resizable({
+    alsoResizeReverse: "#main_content"
   });
 
-  $(function() {
-     $('#show_table').click(function(){
-       $('#main_content').load('/data_set/table');
-     });
+  $( "#tabs" ).tabs();
 
-     $('#full_tree').click(function(){
-       $('#main_content').load('/data_set/report');
-     });
+   $('#show_table').click(function(){
+     $('#main_content').load('/data_set/table');
+   });
 
-     $('#check_size').click(function(){
-       var b = $('#side_content');
-       //b.width(800);
-       alert(b.height() + '×' + b.width());
-     });
+   $('#full_tree').click(function(){
+     $('#main_content').load('/data_set/report');
+   });
 
-    $('table a').click(function (event) {
-      event.preventDefault(); // Prevent link from following its href
-      $('#main_content').load($(this).attr("href"));
-    });
-    $(".show_tooltip").tooltip();
+   $('#check_size').click(function(){
+     var b = $('#side_content');
+     //b.width(800);
+     alert(b.height() + '×' + b.width());
+   });
+
+  $('table a').click(function (event) {
+    event.preventDefault(); // Prevent link from following its href
+    $('#main_content').load($(this).attr("href"));
   });
+  $(".show_tooltip").tooltip();
 
-  $(function() {
-    var latest_data_set_id = $("#latest_data_set_id").val();
-    if(latest_data_set_id){
-      // load latest data_set in container main pane
-      $('#main_content').load('/data_set/show/' + latest_data_set_id );
-    }
-  });
+  var latest_data_set_id = $("#latest_data_set_id").val();
+  if(latest_data_set_id){
+    // load latest data_set in container main pane
+    $('#main_content').load('/data_set/show/' + latest_data_set_id );
+  }
 });
 </script>
 <div id="import" data-complete="<%= @warning %>"></div>
