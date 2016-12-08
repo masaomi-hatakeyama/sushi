@@ -15,9 +15,11 @@
  */
 
 p.notice, p.alert {
-  position: absolute;
-  top: 0;
-  width: 810px;
+  position: absolute; 
+  top: 0; 
+  left: 0;
+  right: 0;
+  width: 50%;
   margin: auto;
   margin-top: 0px;
   border-bottom-right-radius: 10px 10px;
