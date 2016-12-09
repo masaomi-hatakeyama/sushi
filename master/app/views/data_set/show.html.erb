@@ -24,15 +24,15 @@ $(document).ready(function(){
 
   function confirm_parameters() {
     var parameters = {};
-    var next_dataset_name = $("#container_modal_form #next_dataset_name").val();
-    var next_dataset_comment = $("#container_modal_form #next_dataset_comment").val();
-    var sushi_app_class = $("#container_modal_form #sushi_app_class").val();
-    var data_set_id = $("#container_modal_form #data_set_id").val();
+    var next_dataset_name = $("#container_modal_form1 #next_dataset_name").val();
+    var next_dataset_comment = $("#container_modal_form1 #next_dataset_comment").val();
+    var sushi_app_class = $("#container_modal_form1 #sushi_app_class").val();
+    var data_set_id = $("#container_modal_form1 #data_set_id").val();
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
     parameters['next_dataset_comment'] = next_dataset_comment;
-    var formChildren = $( "#container_modal_form #sushi_app_params :input" );
+    var formChildren = $( "#container_modal_form1 #sushi_app_params :input" );
     jQuery.each( formChildren, function( i, ob ) {
       parameters[ob.id] = ob.value;
     });
@@ -42,15 +42,15 @@ $(document).ready(function(){
   }
   function submit_job() {
     var parameters = {};
-    var next_dataset_name = $("#container_modal_form #next_dataset_name").val();
-    var next_dataset_comment = $("#container_modal_form #next_dataset_comment").val();
-    var sushi_app_class = $("#container_modal_form #sushi_app_class").val();
-    var data_set_id = $("#container_modal_form #data_set_id").val();
+    var next_dataset_name = $("#container_modal_form2 #next_dataset_name").val();
+    var next_dataset_comment = $("#container_modal_form2 #next_dataset_comment").val();
+    var sushi_app_class = $("#container_modal_form2 #sushi_app_class").val();
+    var data_set_id = $("#container_modal_form2 #data_set_id").val();
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
     parameters['next_dataset_comment'] = next_dataset_comment;
-    var formChildren = $( "#container_modal_form #sushi_app_params :input" );
+    var formChildren = $( "#container_modal_form2 #sushi_app_params :input" );
     jQuery.each( formChildren, function( i, ob ) {
       parameters[ob.id] = ob.value;
       //alert(ob.id + " " + ob.value);
@@ -59,10 +59,12 @@ $(document).ready(function(){
     submited_dialog.dialog( "open" );
     submit_dialog.dialog( "close" );
   }
-  parameter_dialog = $( "#dialog-form" ).dialog({
+  var dialog_width = window.parent.screen.width*0.7;
+  var dialog_height = window.parent.screen.height*0.8;
+  parameter_dialog = $( "#dialog-form1" ).dialog({
     autoOpen: false,
-    height: 700,
-    width: 800,
+    height: dialog_height,
+    width: dialog_width,
     modal: true,
     buttons: {
       "Next": confirm_parameters,
@@ -73,8 +75,8 @@ $(document).ready(function(){
   });
   submit_dialog = $( "#dialog-form2" ).dialog({
     autoOpen: false,
-    height: 700,
-    width: 800,
+    height: dialog_height,
+    width: dialog_width,
     modal: true,
     buttons: {
       "Submit": submit_job,
@@ -85,8 +87,8 @@ $(document).ready(function(){
   });
   submited_dialog = $( "#dialog-form3" ).dialog({
     autoOpen: false,
-    height: 700,
-    width: 800,
+    height: dialog_height,
+    width: dialog_width,
     modal: true,
     buttons: {
       "Close": function() {
@@ -98,7 +100,7 @@ $(document).ready(function(){
   $( ".sushi_app" ).button().on( "click", function() {
     var data_set_id = $("#data_set_id").val();
     var app_name = $(this).text();
-    $('#container_modal_form').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
+    $('#container_modal_form1').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
     parameter_dialog.dialog( "open" );
   });
 
@@ -125,8 +127,8 @@ $(document).ready(function(){
 </script>
 <%= render 'shared/td' %>
 
-<div id="dialog-form" title="Set parameters">
-  <%= render :partial => '/data_set/modal_form' %>
+<div id="dialog-form1" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form1' %>
 </div>
 <div id="dialog-form2" title="Set parameters">
   <%= render :partial => '/data_set/modal_form2' %>
