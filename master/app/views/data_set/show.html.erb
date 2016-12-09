@@ -22,6 +22,12 @@ $(document).ready(function(){
   // modal form
   var parameter_dialog, submit_dialog, submited_dialog;
 
+  function back_input_parameters(){
+    var data_set_id = $("#data_set_id").val();
+    var app_name = $(this).text();
+    $('#container_modal_form1').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
+    parameter_dialog.dialog( "open" );
+  }
   function confirm_parameters() {
     var parameters = {};
     var next_dataset_name = $("#container_modal_form1 #next_dataset_name").val();
@@ -79,6 +85,7 @@ $(document).ready(function(){
     width: dialog_width,
     modal: true,
     buttons: {
+      "Back": back_input_parameters,
       "Submit": submit_job,
       Cancel: function() {
         submit_dialog.dialog( "close" );
