@@ -9,8 +9,7 @@
       <%= link_to image_tag('sushi_icons/tamago.png'), "/data_set", :method => :get %>
       <h1><%= link_to 'DataSet', "/data_set", :method => :get %></h1>
       <p>
-      You can see, edit and delete data set.<br />
-      You can execute sushi application.
+      You can see, edit and delete data set. You can execute sushi application.
       </p>
     </td>
     <td class="page">
@@ -26,16 +25,14 @@
       <%= link_to image_tag('sushi_icons/maguro.png'), '/job_monitoring' %>
       <h1><%= link_to 'Check Jobs', '/job_monitoring' %></h1>
       <p>
-        Check your submitted jobs and the status.
-        You can add the result as a new data set.
+        You can check your submitted jobs and the status.
       </p>
     </td>
     <td class="page">
       <%= link_to image_tag('sushi_icons/uni.png'), "/projects/p#{session[:project]}" %>
       <h1><%= link_to 'gStore', "/projects/p#{session[:project]}" %></h1>
       <p>
-        Go directly result folder.
-        You can see and download files of result data.
+        Go directly result folder. You can see and download files of result data.
       </p>
     </td>
   </tr>
