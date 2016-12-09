@@ -23,10 +23,8 @@ $(document).ready(function(){
   var parameter_dialog, submit_dialog, submited_dialog;
 
   function back_input_parameters(){
-    var data_set_id = $("#data_set_id").val();
-    var app_name = $(this).text();
-    $('#container_modal_form1').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
     parameter_dialog.dialog( "open" );
+    submit_dialog.dialog( "close" );
   }
   function confirm_parameters() {
     var parameters = {};
