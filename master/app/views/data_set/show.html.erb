@@ -41,6 +41,24 @@ $(document).ready(function(){
       parameters[ob.id] = ob.value;
     });
     $('#container_modal_form2').load('/run_application/confirmation', parameters);
+
+    var dialog_width = window.parent.screen.width*0.7;
+    var dialog_height = window.parent.screen.height*0.8;
+    submit_dialog = $( "#dialog-form2" ).dialog({
+      autoOpen: false,
+      height: dialog_height,
+      width: dialog_width,
+      modal: true,
+      buttons: {
+        "Back": back_input_parameters,
+        "Submit": submit_job,
+        Cancel: function() {
+          submit_dialog.dialog( "close" );
+        }
+      },
+    });
+
+
     submit_dialog.dialog( "open" );
     parameter_dialog.dialog( "close" );
   }
@@ -60,52 +78,46 @@ $(document).ready(function(){
       //alert(ob.id + " " + ob.value);
     });
     $('#container_modal_form3').load('/run_application/submit_jobs', parameters);
+
+    var dialog_width = window.parent.screen.width*0.7;
+    var dialog_height = window.parent.screen.height*0.8;
+    submited_dialog = $( "#dialog-form3" ).dialog({
+      autoOpen: false,
+      height: dialog_height,
+      width: dialog_width,
+      modal: true,
+      buttons: {
+        "Close": function() {
+          submited_dialog.dialog( "close" );
+        }
+      },
+    });
+
+
     submited_dialog.dialog( "open" );
     submit_dialog.dialog( "close" );
   }
-  var dialog_width = window.parent.screen.width*0.7;
-  var dialog_height = window.parent.screen.height*0.8;
-  parameter_dialog = $( "#dialog-form1" ).dialog({
-    autoOpen: false,
-    height: dialog_height,
-    width: dialog_width,
-    modal: true,
-    buttons: {
-      "Next": confirm_parameters,
-      Cancel: function() {
-        parameter_dialog.dialog( "close" );
-      }
-    },
-  });
-  submit_dialog = $( "#dialog-form2" ).dialog({
-    autoOpen: false,
-    height: dialog_height,
-    width: dialog_width,
-    modal: true,
-    buttons: {
-      "Back": back_input_parameters,
-      "Submit": submit_job,
-      Cancel: function() {
-        submit_dialog.dialog( "close" );
-      }
-    },
-  });
-  submited_dialog = $( "#dialog-form3" ).dialog({
-    autoOpen: false,
-    height: dialog_height,
-    width: dialog_width,
-    modal: true,
-    buttons: {
-      "Close": function() {
-        submited_dialog.dialog( "close" );
-      }
-    },
-  });
 
   $( ".sushi_app" ).button().on( "click", function() {
     var data_set_id = $("#data_set_id").val();
     var app_name = $(this).text();
     $('#container_modal_form1').load('/run_application/set_parameters', {'app':app_name,  'data_set_id':data_set_id});
+
+    var dialog_width = window.parent.screen.width*0.7;
+    var dialog_height = window.parent.screen.height*0.8;
+    parameter_dialog = $( "#dialog-form1" ).dialog({
+      autoOpen: false,
+      height: dialog_height,
+      width: dialog_width,
+      modal: true,
+      buttons: {
+        "Next": confirm_parameters,
+        Cancel: function() {
+          parameter_dialog.dialog( "close" );
+        }
+      },
+    });
+
     parameter_dialog.dialog( "open" );
   });
 
