@@ -39,7 +39,7 @@ class DataSetController < ApplicationController
        data_set.project.number == session[:project]
       session[:latest_data_set_id] = nil
     end
-    top(10)
+    top(20)
   end
   def index_full
     top
