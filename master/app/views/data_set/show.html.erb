@@ -162,7 +162,7 @@ $(document).ready(function(){
 <% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
   <%= button_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id} %>
 <% end %>
-<%= button_to 'edit sample', "/sample/#{@data_set.id}" %>
+<%= button_to 'edit samples', "/sample/#{@data_set.id}" %>
 <%= button_to 'Go Job Script&Log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
 <%= button_to 'Show Job Parameter', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
 <hr />
