@@ -121,16 +121,16 @@ $(document).ready(function(){
 
 <%= hidden_field :latest_data_set, :id, :value => session[:latest_data_set_id] %>
 <% if @project %>
-
+<br />
+<br />
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">Tree</a></li>
     <li><a href="#tabs-2">Table</a></li>
   </ul>
   <div id="tabs-1">
-    <button type="button" id="show_table">Full table</button>
-    <button type="button" id="full_tree">Full tree</button>
     <ul id="data_set_tree" class="filetree"></ul>
+    <button type="button" id="full_tree">Full tree</button>
   </div>
   <div id="tabs-2">
     <table>
@@ -149,6 +149,7 @@ $(document).ready(function(){
     <% if @project and data_sets = @project.data_sets and data_sets.length > @data_sets.length %>
       <%= link_to "More...", "/data_set/index_full" %>
     <% end %>
+    <button type="button" id="show_table">Full table</button>
     <% end %>
   </div> <!-- div id="tabs-2" -->
 </div> <!-- div id="tabs"9 -->

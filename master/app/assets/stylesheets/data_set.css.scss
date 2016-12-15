@@ -54,3 +54,21 @@ td.check_box {
 .jstree-node {
     font-size: 13pt;
 }
+
+
+div#data_set_header {
+  margin: 0px;
+  padding: 4px;
+  background-color: white;
+  border: 1px solid white;
+}
+
+div#data_set_header a {
+  color: gray;
+  text-decoration: none;
+}
+
+div#data_set_header a:hover {
+  color: red;
+}
+
