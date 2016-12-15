@@ -4,7 +4,7 @@
     <%= button_to 'Back', '/run_application', :method=>:get %>
   <% else %>
     <table id="sushi_application">
-      <th>Category</th><th>Application</th>
+      <th>Category</th><th>Applicable Applications</th>
     <% @sushi_apps_category.each do |category| %>
       <tr><td><%= category %></td>
         <td>

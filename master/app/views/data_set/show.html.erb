@@ -142,31 +142,22 @@ $(document).ready(function(){
 
 });
 </script>
-<%= render 'shared/td' %>
 
-<div id="dialog-form1" title="Set parameters">
-  <%= render :partial => '/data_set/modal_form1' %>
-</div>
-<div id="dialog-form2" title="Set parameters">
-  <%= render :partial => '/data_set/modal_form2' %>
-</div>
-<div id="dialog-form3" title="Set parameters">
-  <%= render :partial => '/data_set/modal_form3' %>
-</div>
+<h3 style="display: inline-block;">DataSet</h3>
+<%= render 'shared/td' %>
 
 <button id="add_comment">add comment</button>
 <button id="edit_name">edit name</button>
 <%= hidden_field :data_set, :name, :value=>@data_set.name %>
 <%= hidden_field :data_set, :id, :value=>@data_set.id %>
-<%= button_to "download as tsv", {:action=>"save_as_tsv", :id=>@data_set.id} %>
+<%= button_to "download tsv", {:action=>"save_as_tsv", :id=>@data_set.id} %>
 <% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
   <%= button_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id} %>
 <% end %>
 <%= button_to 'edit samples', "/sample/#{@data_set.id}" %>
-<%= button_to 'Go Job Script&Log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
-<%= button_to 'Show Job Parameter', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
+<%= button_to 'script&log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
+<%= button_to 'parameters', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
 <hr />
-<h3>DataSet</h3>
 <table>
   <tr><th>ID</th><th>Name</th><th>Samples</th><th>Parent</th><th>Child(ren)IDs</th><th>Created</th><th>BFabricID</th></tr>
   <% if @data_set %>
@@ -273,8 +264,21 @@ $(document).ready(function(){
       <li>Invalid characters: !@#$%^&*()<>{}[]/:;"='+| and SPACE</li>
     </ul>
   <% elsif @sushi_apps %>
-    <h3>Applications <form style="display:inline-block;"> <button type="button" id="refresh_sushi_list">refresh</button> </form></h3> 
     <%= render :partial => '/data_set/sushi_application_list' %>
+    <br />
+    <form style="display:inline-block;"> <button type="button" id="refresh_sushi_list">refresh</button> </form></h3> 
   <% end %>
 
 <hr />
+
+<div id="dialog-form1" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form1' %>
+</div>
+<div id="dialog-form2" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form2' %>
+</div>
+<div id="dialog-form3" title="Set parameters">
+  <%= render :partial => '/data_set/modal_form3' %>
+</div>
+
+
