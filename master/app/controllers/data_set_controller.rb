@@ -193,6 +193,8 @@ class DataSetController < ApplicationController
       @sushi_apps_category = @sushi_apps.keys.sort
     end
 
+    @samples = @data_set.samples.page(params[:page])
+
     # keep data_set.id
     session[:latest_data_set_id] = @data_set.id
 

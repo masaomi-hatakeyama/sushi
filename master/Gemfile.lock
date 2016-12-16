@@ -90,6 +90,9 @@ GEM
       railties (>= 3.2.16)
     json (1.8.3)
     jstree-rails-4 (3.2.1)
+    kaminari (0.17.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -228,6 +231,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   jstree-rails-4
+  kaminari
   mysql2
   rails (= 4.2.6)
   rspec

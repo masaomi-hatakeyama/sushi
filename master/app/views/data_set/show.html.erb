@@ -1,23 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
-    var samples_length = $("#data_set_samples_length").val();
-    if(parseInt(samples_length) > 5){
-      $("#hide_show").hide();
-      $("#hide").text("Show");
-    }else{
-      $("#hide_show").show();
-      $("#hide").text("Hide");
-    }
-    $("#hide").click(function(){
-      var text_val=$(this).text();
-      if(text_val.match(/Hide/)){
-        $("#hide_show").hide(500);
-        $("#hide").text("Show");
-      }else{
-        $("#hide_show").show(500);
-        $("#hide").text("Hide");
-      }
-    });
+  var samples_length = $("#data_set_samples_length").val();
 
   // modal form
   var parameter_dialog, submit_dialog, submited_dialog;
@@ -139,7 +122,10 @@ $(document).ready(function(){
       $('#main_content').load('/data_set/edit_name', {'data_set_id':data_set_id, 'data_set_name':new_name});
     }
   });
-
+  $("nav.pagination a").click(function(){
+    var link = $(this).attr('href');
+    $('#main_content').load(link);
+  });
 });
 </script>
 
@@ -190,9 +176,8 @@ $(document).ready(function(){
   <%= @data_set.comment %><br />
 <% end %>
 <hr />
-<h3>Samples <button id="hide">Hide</button></h3>
+<h3>Samples</h3>
 
-<div id="hide_show">
 <% if @data_set %>
     <div style="width:100%; overflow-x:scroll;">
   <% if @data_set.samples.length > 20 %>
@@ -204,7 +189,7 @@ $(document).ready(function(){
       <th><%= header %></th>
     <% end %>
   </tr>
-  <% @data_set.samples.each do |sample| %>
+  <% @samples.each do |sample| %>
     <tr>
       <% @data_set.factor_first_headers.each do |header| %>
         <td>
@@ -237,9 +222,9 @@ $(document).ready(function(){
   <% if @data_set.samples.length > 20 %>
     </div>
   <% end %>
+  <%= paginate(@samples, :remote => true) %>
     </div>
 <% end %>
-</div>
 <hr />
 
 <% unless @file_exist.values.inject{|a,b| a and b}%>
