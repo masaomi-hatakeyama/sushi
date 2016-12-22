@@ -216,7 +216,10 @@ $(document).ready(function(){
     </tr>
   <% end %>
 </table>
+<%= form_tag({:controller => 'data_set', :action => 'index'}, :method => :get) do %>
   <%= paginate(@samples, :remote => true) %>
+    #sample =<%= select :sample, :per_page, {"5" => 5, "10" => 10, "50" => 50, "100" => 100}, :selected => session[:sample_per_page] %> / view <%= submit_tag "Reload" %>
+<% end %>
     </div>
 <% end %>
 <hr />

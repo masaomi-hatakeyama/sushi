@@ -39,6 +39,9 @@ class DataSetController < ApplicationController
        data_set.project.number == session[:project]
       session[:latest_data_set_id] = nil
     end
+    if sample = params[:sample] and per_page = sample[:per_page]
+      session[:sample_per_page] = per_page.to_i
+    end
     top(20)
   end
   def index_full
@@ -193,7 +196,11 @@ class DataSetController < ApplicationController
       @sushi_apps_category = @sushi_apps.keys.sort
     end
 
-    @samples = @data_set.samples.page(params[:page])
+    @samples = if sample_per_page = session[:sample_per_page]
+      @data_set.samples.page(params[:page]).per(sample_per_page)
+    else
+      @data_set.samples.page(params[:page])
+    end
 
     # keep data_set.id
     session[:latest_data_set_id] = @data_set.id
