@@ -180,9 +180,6 @@ $(document).ready(function(){
 
 <% if @data_set %>
     <div style="width:100%; overflow-x:scroll;">
-  <% if @data_set.samples.length > 20 %>
-    <div style="height:450px; overflow-y:scroll;">
-  <% end %>
 <table>
   <tr>
     <% @data_set.factor_first_headers.each do |header| %>
@@ -219,9 +216,6 @@ $(document).ready(function(){
     </tr>
   <% end %>
 </table>
-  <% if @data_set.samples.length > 20 %>
-    </div>
-  <% end %>
   <%= paginate(@samples, :remote => true) %>
     </div>
 <% end %>
