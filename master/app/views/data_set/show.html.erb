@@ -15,6 +15,10 @@ $(document).ready(function(){
     var next_dataset_comment = $("#container_modal_form1 #next_dataset_comment").val();
     var sushi_app_class = $("#container_modal_form1 #sushi_app_class").val();
     var data_set_id = $("#container_modal_form1 #data_set_id").val();
+
+    alert(next_dataset_name);
+    alert(sushi_app_class);
+    alert(data_set_id);
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
@@ -37,13 +41,18 @@ $(document).ready(function(){
         "Submit": submit_job,
         Cancel: function() {
           submit_dialog.dialog( "close" );
+//          parameter_dialog.dialog("destroy");
+//          parameter_dialog.dialog("widget").remove();
+          submit_dialog.dialog("destroy");
+          submit_dialog.dialog("widget").remove();
         }
       },
     });
 
-
     submit_dialog.dialog( "open" );
     parameter_dialog.dialog( "close" );
+    parameter_dialog.dialog("destroy");
+    parameter_dialog.dialog("widget").remove();
   }
   function submit_job() {
     var parameters = {};
@@ -51,6 +60,9 @@ $(document).ready(function(){
     var next_dataset_comment = $("#container_modal_form2 #next_dataset_comment").val();
     var sushi_app_class = $("#container_modal_form2 #sushi_app_class").val();
     var data_set_id = $("#container_modal_form2 #data_set_id").val();
+    alert(next_dataset_name);
+    alert(sushi_app_class);
+    alert(data_set_id);
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
@@ -72,13 +84,20 @@ $(document).ready(function(){
       buttons: {
         "Close": function() {
           submited_dialog.dialog( "close" );
+//          submit_dialog.dialog("destroy");
+//          submit_dialog.dialog("widget").remove();
+          submited_dialog.dialog("destroy");
+          submited_dialog.dialog("widget").remove();
         }
       },
     });
 
-
     submited_dialog.dialog( "open" );
     submit_dialog.dialog( "close" );
+//    parameter_dialog.dialog("destroy");
+//    parameter_dialog.dialog("widget").remove();
+    submit_dialog.dialog("destroy");
+    submit_dialog.dialog("widget").remove();
   }
 
   $( ".sushi_app" ).button().on( "click", function() {
@@ -97,6 +116,8 @@ $(document).ready(function(){
         "Next": confirm_parameters,
         Cancel: function() {
           parameter_dialog.dialog( "close" );
+          parameter_dialog.dialog("destroy");
+          parameter_dialog.dialog("widget").remove();
         }
       },
     });
