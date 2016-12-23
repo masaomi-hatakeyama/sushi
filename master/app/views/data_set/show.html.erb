@@ -8,6 +8,7 @@ $(document).ready(function(){
   function back_input_parameters(){
     parameter_dialog.dialog( "open" );
     submit_dialog.dialog( "close" );
+    submit_dialog.dialog("destroy");
   }
   function confirm_parameters() {
     var parameters = {};
@@ -16,9 +17,6 @@ $(document).ready(function(){
     var sushi_app_class = $("#container_modal_form1 #sushi_app_class").val();
     var data_set_id = $("#container_modal_form1 #data_set_id").val();
 
-    alert(next_dataset_name);
-    alert(sushi_app_class);
-    alert(data_set_id);
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
@@ -40,15 +38,10 @@ $(document).ready(function(){
         "Back": back_input_parameters,
         "Submit": submit_job,
         Cancel: function() {
-          alert("destroy sumit_dialog1");
           parameter_dialog.dialog( "close" );
-          alert("destroy sumit_dialog2");
           submit_dialog.dialog( "close" );
-          alert("destroy sumit_dialog3");
           parameter_dialog.dialog("destroy");
-          alert("destroy sumit_dialog4");
           submit_dialog.dialog("destroy");
-          alert("destroy sumit_dialog5");
         }
       },
     });
@@ -63,9 +56,6 @@ $(document).ready(function(){
     var sushi_app_class = $("#container_modal_form2 #sushi_app_class").val();
     var data_set_id = $("#container_modal_form2 #data_set_id").val();
 
-    alert(next_dataset_name);
-    alert(sushi_app_class);
-    alert(data_set_id);
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
     parameters['next_dataset_name'] = next_dataset_name;
@@ -85,19 +75,12 @@ $(document).ready(function(){
       modal: true,
       buttons: {
         "Close": function() {
-          alert("destroy sumited_dialog1");
           parameter_dialog.dialog( "close" );
-          alert("destroy sumited_dialog2");
           submit_dialog.dialog( "close" );
-          alert("destroy sumited_dialog3");
           submited_dialog.dialog( "close" );
-          alert("destroy sumited_dialog4");
           parameter_dialog.dialog("destroy");
-          alert("destroy sumited_dialog5");
           submit_dialog.dialog("destroy");
-          alert("destroy sumited_dialog6");
           submited_dialog.dialog("destroy");
-          alert("destroy sumited_dialog7");
         }
       },
     });
@@ -121,11 +104,8 @@ $(document).ready(function(){
       buttons: {
         "Next": confirm_parameters,
         Cancel: function() {
-          alert("destroy parameter_dialog1");
           parameter_dialog.dialog( "close" );
-          alert("destroy parameter_dialog2");
           parameter_dialog.dialog("destroy");
-          alert("destroy parameter_dialog3");
         }
       },
     });
