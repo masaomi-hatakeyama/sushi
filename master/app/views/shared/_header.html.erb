@@ -2,7 +2,7 @@
   <nav id="login">
   <% if user_signed_in? %>
     <% project_init %>
-    <%= link_to "Today's Menu", "/" %>
+    <%= link_to image_tag("sushifabric.png"), "/" %>
 		-
     <%= link_to 'DataSet', "/data_set", :method => :get %>
     -
@@ -42,5 +42,4 @@
     <%= link_to "Help", "/sushi_doc_md.html" %>
   <% end %>
   </nav>
-  <h1>SUSHI</h1>
 </div>
