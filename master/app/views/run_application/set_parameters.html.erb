@@ -20,7 +20,6 @@
 
 </script>
 
-<h1>Project <%= session[:project] %></h1>
 <hr />
 <h2><%= @sushi_app.class %> <span style="color:gray;font-size:medium">Set Parameters</span></h2>
 <blockquote>
@@ -42,6 +41,7 @@
       </tr>
     </table>
   <h3>Parameters</h3>
+    <div id="sushi_app_params">
     <table>
       <% @sushi_app.params.each do |key, value| %>
         <tr>
@@ -94,9 +94,9 @@
         </tr>
       <% end %>
     </table>
+    </div>
   <br />
   <br />
-  <%= submit_tag 'Next' %>
 <% end %>
 
 

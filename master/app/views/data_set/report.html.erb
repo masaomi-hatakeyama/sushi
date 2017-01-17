@@ -1,5 +1,18 @@
-<h1>Project <%= session[:project] %></h1>
-<h3>DataSet Report</h3>
+<script type="text/javascript">
+$(function() {
+   $('table a.new_tab').click(function (event) {
+    event.preventDefault(); // Prevent link from following its href
+    window.open($(this).attr("href"));
+   });
+
+   $('table a').click(function (event) {
+    event.preventDefault(); // Prevent link from following its href
+    $('#main_content').load($(this).attr("href"));
+   });
+});
+</script>
+
+<h3>DataSet Full Tree</h3>
 
 <table>
   <%= dataset_tree(0, @root).html_safe %>

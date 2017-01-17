@@ -1,4 +1,6 @@
 <h1>Project <%= session[:project] %></h1>
+<%= image_tag('back.gif') %>
+<%= link_to "Backto DataSet #{@data_set.name}", "/data_set", :method=>:get %>
 <hr />
 <h3>Job Script</h3>
 <% if @data_set %>
@@ -14,7 +16,4 @@
   </tr>
 </table>
 <% end %>
-<%= button_to 'Go Job List', '/job_monitoring' %>
 <hr />
-
-

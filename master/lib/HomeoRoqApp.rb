@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-Version = '20161223-092434'
+Version = '20170117-151142'
 
 require 'sushi_fabric'
 require_relative 'global_variables'
@@ -133,5 +133,3 @@ http://seselab.org/homeoroq/
     command
   end
 end
-
-

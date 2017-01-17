@@ -1,25 +1,27 @@
 class DataSetController < ApplicationController
   include SushiFabric
-  def top(n_dataset=1000)
+  def top(n_dataset=1000, sample_search=nil)
     view_context.project_init
     @project = Project.find_by_number(session[:project].to_i)
-
+    
     @data_sets = []
     if @project and  data_sets = @project.data_sets
       @data_sets = data_sets.reverse[0, n_dataset]
-      @data_sets.each do |data_set|
-        unless data_set.completed_samples.to_i == data_set.samples_length.to_i
-          sample_available = 0
-          data_set.samples.each do |sample|
-            if sample_file = sample.to_hash.select{|header, file| header and header.tag?('File')}.first
-              file_path = File.join(SushiFabric::GSTORE_DIR, sample_file.last) 
-              if File.exist?(file_path)
-                sample_available+=1
+      if sample_search
+        @data_sets.each do |data_set|
+          unless data_set.completed_samples.to_i == data_set.samples_length.to_i
+            sample_available = 0
+            data_set.samples.each do |sample|
+              if sample_file = sample.to_hash.select{|header, file| header and header.tag?('File')}.first
+                file_path = File.join(SushiFabric::GSTORE_DIR, sample_file.last) 
+                if File.exist?(file_path)
+                  sample_available+=1
+                end
               end
             end
+            data_set.completed_samples = sample_available
+            data_set.save
           end
-          data_set.completed_samples = sample_available
-          data_set.save
         end
       end
     end
@@ -29,11 +31,26 @@ class DataSetController < ApplicationController
       @warning = warning
       session['import_fail'] = nil
     end
+    if data_set_id = params[:format] and DataSet.find_by_id(data_set_id.to_i)
+      session[:latest_data_set_id] = data_set_id
+    end
+    unless latest_data_set_id = session[:latest_data_set_id] and
+       data_set = DataSet.find_by_id(latest_data_set_id.to_i) and
+       data_set.project.number == session[:project]
+      session[:latest_data_set_id] = nil
+    end
+    if sample = params[:sample] and per_page = sample[:per_page]
+      session[:sample_per_page] = per_page.to_i
+    end
     top(20)
   end
   def index_full
     top
     render action: "index"
+  end
+  def table
+    top(1000, true)
+    render :layout => "data_set_show"
   end
 #  caches_action :report
 #  caches_page :report
@@ -58,7 +75,7 @@ class DataSetController < ApplicationController
         base = File.basename(report_base)
         report_link = if data_set.completed_samples.to_i == data_set.samples_length
                         report_url = File.join('http://fgcz-gstore.uzh.ch/projects', report_base)
-                        "<a href='#{report_url}'>#{base}</a>"
+                        "<a href='#{report_url}' class='new_tab'>#{base}</a>"
                       else 
                         base
                       end
@@ -78,6 +95,7 @@ class DataSetController < ApplicationController
     end
     @root = top_nodes.reverse if @root.empty?
     @tree.concat @root
+    render :layout => "data_set_show"
   end
   def script_log
     @data_set = if id = params[:format]
@@ -97,24 +115,32 @@ class DataSetController < ApplicationController
       @data_set.save
     end
   end
+  def add_comment
+    if id = params[:data_set_id] and comment = params[:data_set_comment]
+      data_set = DataSet.find_by_id(id)
+      data_set.comment = comment
+      data_set.project.add_tree_node(data_set)
+      data_set.save
+      session[:latest_data_set_id] = data_set.id
+    end 
+    redirect_to(:action => "index") and return
+  end
+  def edit_name
+    if id = params[:data_set_id] and name = params[:data_set_name]
+      data_set = DataSet.find_by_id(id)
+      data_set.name = name
+      data_set.project.add_tree_node(data_set)
+      data_set.save
+      session[:latest_data_set_id] = data_set.id
+    end
+    redirect_to(:action => "index") and return
+  end
   def show
     view_context.project_init
     @fgcz = SushiFabric::Application.config.fgcz?
     # switch project (from job_monitoring)
     if project = params[:project]
       session[:project] = project.to_i
-    end
-    # data_set comment
-    if data_set = params[:data_set] and comment = data_set[:comment] and id = data_set[:id]
-      data_set = DataSet.find_by_id(id)
-      data_set.comment = comment
-      data_set.save
-    end 
-    # new data_set name
-    if new_data_set = params[:data_set] and name = new_data_set[:name] and id = new_data_set[:id]
-      data_set = DataSet.find_by_id(id)
-      data_set.name = name
-      data_set.save
     end
 
     @data_set = DataSet.find_by_id(params[:id])
@@ -169,6 +195,17 @@ class DataSetController < ApplicationController
       @sushi_apps = @data_set.runnable_apps
       @sushi_apps_category = @sushi_apps.keys.sort
     end
+
+    @samples = if sample_per_page = session[:sample_per_page]
+      @data_set.samples.page(params[:page]).per(sample_per_page)
+    else
+      @data_set.samples.page(params[:page])
+    end
+
+    # keep data_set.id
+    session[:latest_data_set_id] = @data_set.id
+
+    render :layout => "data_set_show"
   end
   def refresh_apps
     set_runnable_apps
@@ -189,7 +226,7 @@ class DataSetController < ApplicationController
             "parent" => parent_id,
             "state" => {"opened":true},
             "a_attr" => {"href"=>"/data_set/p#{project_number}/#{data_set_id}", 
-                         "onclick"=>"window.open('/data_set/p#{project_number}/#{data_set_id}')"}
+                         "onclick"=>"$('#main_content').load('/data_set/p#{project_number}/#{data_set_id}');"}
             }
     root << node
     data_set.data_sets.each do |child|
@@ -210,23 +247,11 @@ class DataSetController < ApplicationController
   end
   def whole_treeviews
     @project = Project.find_by_number(session[:project].to_i)
-    root = []
-    project_dataset_ids = Hash[*(@project.data_sets.map{|data_set| [data_set.id, true]}.flatten)]
-    @project.data_sets.each do |data_set|
-      node = {"id" => data_set.id, 
-              "text" => data_set.data_sets.length.to_s+" "+data_set.name+" <small><font color='gray'>"+data_set.comment.to_s+"</font></small>",
-              "a_attr" => {"href"=>"/data_set/p#{@project.number}/#{data_set.id}", 
-                           "onclick"=>"window.open('/data_set/p#{@project.number}/#{data_set.id}')"}
-              }
-      if parent = data_set.data_set and project_dataset_ids[parent.id]
-        node["parent"] = parent.id
-      else
-        node["parent"] = "#"
-      end
-      root << node
+    if tree = @project.data_set_tree and tree.length != @project.data_sets.length
+      @project.construct_data_set_tree
     end
     
-    render :json => root.reverse
+    render :json => @project.data_set_tree.values.reverse
   end
   def import_from_gstore
     params[:project] = session[:project]
@@ -298,6 +323,9 @@ class DataSetController < ApplicationController
 
       if @data_set_id
         set_runnable_apps(false)
+        if data_set = DataSet.find_by_id(@data_set_id) and @project
+          @project.add_tree_node(data_set)
+        end
       end
     end
 
@@ -381,6 +409,9 @@ class DataSetController < ApplicationController
 
       if @data_set_id
         set_runnable_apps(false)
+        if data_set = DataSet.find_by_id(@data_set_id) and @project
+          @project.add_tree_node(data_set)
+        end
       end
     end
   end
@@ -500,7 +531,10 @@ class DataSetController < ApplicationController
         sample.delete
       end
       @deleted_data_set = @data_set.delete
-
+      project = @data_set.project
+      project.data_set_tree.delete(@data_set.id)
+      project.save
+      @data_set
     end
   end
   def multi_destroy
@@ -576,17 +610,4 @@ class DataSetController < ApplicationController
     @command = @@workflow_manager.delete_command(target)
     @command_log = `#{@command}`
   end
-=begin
-  def confirm_delete_only_data_files_in_project
-    @project = Project.find_by_number(session[:project].to_i)
-    @delete_candidates_all = []
-    @project.data_sets.each do |data_set|
-      @delete_candidates_all.concat(delete_candidates(data_set))
-    end
-    require 'pp'
-    pp @delete_candidates_all
-  end
-  def run_delete_only_data_files_in_project
-  end
-=end
 end
