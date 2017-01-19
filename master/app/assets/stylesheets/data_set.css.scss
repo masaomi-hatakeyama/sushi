@@ -77,3 +77,7 @@ nav {
 div#tabs, div#tabs-1, div#tabs-2 {
   padding: 0.1em;
 }
+div#tabs-table {
+  height: 200px;
+  overflow-y: scroll;
+}

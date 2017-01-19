@@ -140,6 +140,7 @@ $(document).ready(function(){
     <button type="button" id="full_tree">Full tree</button>
   </div>
   <div id="tabs-2">
+    <div id="tabs-table">
     <table>
       <tr><th>ID</th><th>Name</th><th>Samples</th></tr>
     <% if @project %>
@@ -153,6 +154,7 @@ $(document).ready(function(){
       </tr>
     <% end %>
     </table>
+    </div>
     <% if @project and data_sets = @project.data_sets and data_sets.length > @data_sets.length %>
       <%= link_to "More...", "/data_set/index_full" %>
     <% end %>
