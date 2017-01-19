@@ -74,14 +74,12 @@ div#contents {
 }
 
 div#side_content {
-  width: 30%;
-  float: left;
+  height: 30%;
   background-color: #ffffff;
 }
 
 div#main_content {
-  width: 70%;
-  float: right;
+  height: 70%;
   background-color: #ffffff;
 }
 

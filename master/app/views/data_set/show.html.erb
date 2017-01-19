@@ -138,21 +138,6 @@ $(document).ready(function(){
 });
 </script>
 
-<div id=data_set_header>
-<h3 style="display: inline-block;">DataSet</h3>
-<%= render 'shared/td' %>
-- <%= link_to 'add comment', '', :id=>"add_comment" %> 
-- <%= link_to 'edit name', '', :id=>"edit_name" %>
-<%= hidden_field :data_set, :name, :value=>@data_set.name %>
-<%= hidden_field :data_set, :id, :value=>@data_set.id %>
-- <%= link_to "download tsv", {:action=>"save_as_tsv", :id=>@data_set.id}, :method=>:post %>
-<% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
-- <%= link_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id}, :method=>:post %>
-<% end %>
-- <%= link_to 'edit samples', "/sample/#{@data_set.id}", :method=>:post %>
-- <%= link_to 'script&log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
-- <%= link_to 'parameters', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
-</div>
 <hr />
 <table>
   <tr><th>ID</th><th>Name</th><th>Samples</th><th>Parent</th><th>Child(ren)IDs</th><th>Created</th><th>BFabricID</th></tr>
@@ -185,8 +170,20 @@ $(document).ready(function(){
   <%= @data_set.comment %><br />
 <% end %>
 <hr />
-<h3>Samples</h3>
-
+<div id=data_set_header>
+<%= render 'shared/td' %>
+- <%= link_to 'add comment', '', :id=>"add_comment" %> 
+- <%= link_to 'edit name', '', :id=>"edit_name" %>
+<%= hidden_field :data_set, :name, :value=>@data_set.name %>
+<%= hidden_field :data_set, :id, :value=>@data_set.id %>
+- <%= link_to "download tsv", {:action=>"save_as_tsv", :id=>@data_set.id}, :method=>:post %>
+<% if session[:employee] and @data_set.parent_id and @data_set.child == false %>
+- <%= link_to "delete only data files", {:action=>"confirm_delete_only_data_files", :id=>@data_set.id}, :method=>:post %>
+<% end %>
+- <%= link_to 'edit samples', "/sample/#{@data_set.id}", :method=>:post %>
+- <%= link_to 'script&log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
+- <%= link_to 'parameters', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
+</div>
 <% if @data_set %>
     <div style="width:100%; overflow-x:scroll;">
 <table>
