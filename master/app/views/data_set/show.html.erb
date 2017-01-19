@@ -16,6 +16,7 @@ $(document).ready(function(){
     var next_dataset_comment = $("#container_modal_form1 #next_dataset_comment").val();
     var sushi_app_class = $("#container_modal_form1 #sushi_app_class").val();
     var data_set_id = $("#container_modal_form1 #data_set_id").val();
+    var selected_nodes = $("#container_modal_form1 #sushi_app_params #parameters_node").val();
 
     parameters['sushi_app_class'] = sushi_app_class;
     parameters['data_set_id'] = data_set_id;
@@ -25,6 +26,7 @@ $(document).ready(function(){
     jQuery.each( formChildren, function( i, ob ) {
       parameters[ob.id] = ob.value;
     });
+    parameters['parameters_node'] = selected_nodes;
     $('#container_modal_form2').load('/run_application/confirmation', parameters);
 
     var dialog_width = window.parent.screen.width*0.7;
