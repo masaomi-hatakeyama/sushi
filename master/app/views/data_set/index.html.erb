@@ -147,7 +147,7 @@ $(document).ready(function(){
     <% @data_sets.each do |data_set| %>
       <tr>
         <td><%= data_set.id %></td>
-        <td><%= link_to td(data_set.name), "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
+        <td><%= link_to data_set.name, "/data_set/p#{@project.number}/#{data_set.id}" %></td> 
         <td>
           <%= data_set.samples_length %>
         </td>
