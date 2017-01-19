@@ -75,11 +75,14 @@ div#contents {
 
 div#side_content {
   height: 30%;
-  background-color: #ffffff;
+  background-color: #0fffff;
 }
 
 div#main_content {
   height: 70%;
+  width: 105%;
+  float: right;
+  margin-right: -1.5%;
   background-color: #ffffff;
 }
 

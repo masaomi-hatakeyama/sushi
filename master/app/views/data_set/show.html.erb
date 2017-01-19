@@ -164,7 +164,6 @@ $(document).ready(function(){
   </tr>
   <% end %>
 </table>
-<ul id="data_set_tree" class="filetree"></ul>
 <% if @data_set.comment %>
   <%= hidden_field :data_set, :comment, :value=>@data_set.comment %>
   <%= @data_set.comment %><br />
@@ -184,6 +183,7 @@ $(document).ready(function(){
 - <%= link_to 'script&log', "/data_set/script_log.#{@data_set.id}", :method=>:get %>
 - <%= link_to 'parameters', "/data_set/job_parameter.#{@data_set.id}", :method=>:get %>
 </div>
+<hr />
 <% if @data_set %>
     <div style="width:100%; overflow-x:scroll;">
 <table>
