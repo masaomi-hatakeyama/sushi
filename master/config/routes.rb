@@ -82,6 +82,7 @@ SushiFabric::Application.routes.draw do
   get "/check_sushi_constants" => "home#sushi_constants"
   get "/import/*dataset" => "data_set#import_from_gstore"
   get "/sushi_rank" => "home#sushi_rank"
+  get "/project/:project_id/data_set/:data_set_id" => "data_set#index"
 
 
 #	match "/city_select" => "run_application#city_select"

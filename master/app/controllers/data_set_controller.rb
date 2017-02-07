@@ -31,8 +31,17 @@ class DataSetController < ApplicationController
       @warning = warning
       session['import_fail'] = nil
     end
-    if data_set_id = params[:format] and DataSet.find_by_id(data_set_id.to_i)
+    if data_set_id = params[:format] or
+       data_set_id = params[:data_set_id] and
+       data_set = DataSet.find_by_id(data_set_id.to_i)
       session[:latest_data_set_id] = data_set_id
+      if project_id = params[:project_id] and
+        number = project_id.gsub(/p/,'') and
+        number == data_set.project.number.to_s
+        current_user.selected_project = number
+        current_user.save
+        session[:project] = number.to_i
+      end
     end
     unless latest_data_set_id = session[:latest_data_set_id] and
        data_set = DataSet.find_by_id(latest_data_set_id.to_i) and
