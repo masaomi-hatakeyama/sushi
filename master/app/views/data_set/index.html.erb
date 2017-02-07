@@ -119,12 +119,12 @@ $(document).ready(function(){
   if(latest_data_set_id){
     // load latest data_set in container main pane
     $('#main_content').load('/data_set/show/' + latest_data_set_id );
-    var project_id = $('#project_id').val();
-    if(project_id){
-      window.history.replaceState('','','/data_set');
+    //var project_id = $('#project_id').val();
+    //if(project_id){
+      //window.history.replaceState('','','/data_set');
       //$('#data_set_tree').jstree(true).clear_state();
       // it does not work, I do not know why.
-    }
+    //}
   }
 });
 </script>
